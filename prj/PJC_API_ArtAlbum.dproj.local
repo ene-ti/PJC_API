@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2021/01/08 17:16:10.607,=C:\Projetos\Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/01/08 17:16:28.794,=C:\Projetos\Delphi\Unit2.pas</Transaction>
+    <Transaction>2021/01/08 17:19:38.760,C:\Projetos\PJC\pjc_api\prj\u_ApiController.pas=C:\Projetos\Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/01/08 17:20:09.257,C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.pas=C:\Projetos\Delphi\Unit2.pas</Transaction>
+    <Transaction>2021/01/08 17:20:09.257,C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.dfm=C:\Projetos\Delphi\Unit2.dfm</Transaction>
+    <Transaction>2021/01/08 17:21:06.058,C:\Projetos\PJC\pjc_api\prj\PJC_API_ArtAlbum.dproj=C:\Projetos\Delphi\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
