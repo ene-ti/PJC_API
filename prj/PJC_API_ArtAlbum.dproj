@@ -150,6 +150,9 @@
             <FormType>dfm</FormType>
             <DesignClass>TWebModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="u_PoolConnection.pas"/>
+        <DCCReference Include="u_ArtistaClass.pas"/>
+        <DCCReference Include="u_ArtistaService.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

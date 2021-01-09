@@ -2,7 +2,7 @@ unit u_ApiWebModule;
 
 interface
 
-uses 
+uses
   System.SysUtils,
   System.Classes,
   Web.HTTPApp,
@@ -28,9 +28,13 @@ implementation
 uses 
   u_ApiController,
   System.IOUtils, 
-  MVCFramework.Commons, 
-  MVCFramework.Middleware.StaticFiles, 
-  MVCFramework.Middleware.Compression;
+  System.Generics.Collections,
+  MVCFramework.Commons,
+  MVCFramework.Middleware.StaticFiles,
+  MVCFramework.Middleware.Compression,
+  MVCFramework.Server,
+  MVCFramework.Server.Impl,
+  MVCFramework.Middleware.Authentication;
 
 procedure TApiWebModule.WebModuleCreate(Sender: TObject);
 begin
@@ -65,13 +69,25 @@ begin
   // Enable the following middleware declaration if you want to
   // serve static files from this dmvcframework service.
   // The folder mapped as documentroot must exists!
-  // FMVC.AddMiddleware(TMVCStaticFilesMiddleware.Create( 
-  //    '/static', 
-  //    TPath.Combine(ExtractFilePath(GetModuleName(HInstance)), 'www')) 
-  //  );	
+  // FMVC.AddMiddleware(TMVCStaticFilesMiddleware.Create(
+  //    '/static',
+  //    TPath.Combine(ExtractFilePath(GetModuleName(HInstance)), 'www'))
+  //  );
 
-  // To enable compression (deflate, gzip) just add this middleware as the last one 
+  // To enable compression (deflate, gzip) just add this middleware as the last one
   FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
+
+  FMVC.AddMiddleware(
+    TMVCBasicAuthenticationMiddleware.Create(
+      TMVCDefaultAuthenticationHandler.New
+        .SetOnAuthentication(
+        procedure(const AUserName, APassword: string;
+          AUserRoles: TList<string>; var IsValid: Boolean;
+          const ASessionData: TDictionary<String, String>)
+        begin
+          IsValid := AUserName.Equals('usu') and APassword.Equals('123');
+        end
+  )));
 end;
 
 procedure TApiWebModule.WebModuleDestroy(Sender: TObject);
