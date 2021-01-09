@@ -3,6 +3,7 @@ program PJC_API_ArtAlbum;
 {$APPTYPE CONSOLE}
 
 uses
+  Forms,
   System.SysUtils,
   MVCFramework.Logger,
   MVCFramework.Commons,
@@ -13,10 +14,15 @@ uses
   IdContext,
   IdHTTPWebBrokerBridge,
   u_ApiController in 'u_ApiController.pas',
-  u_ApiWebModule in 'u_ApiWebModule.pas' {ApiWebModule: TWebModule};
+  u_ApiWebModule in 'u_ApiWebModule.pas' {ApiWebModule: TWebModule},
+  u_ArtistaClass in 'u_ArtistaClass.pas',
+  u_ArtistaService in 'u_ArtistaService.pas',
+  u00_FunPro in 'u00_FunPro.pas',
+  u00_Global in 'u00_Global.pas',
+  u00_SetupINI in 'u00_SetupINI.pas' {frmSetupINI},
+  u00_Conexao in 'u00_Conexao.pas';
 
 {$R *.res}
-
 
 procedure RunServer(APort: Integer);
 var
@@ -24,7 +30,13 @@ var
   LCustomHandler: TMVCCustomREPLCommandsHandler;
   LCmd: string;
 begin
-  Writeln('** DMVCFramework Server ** build ' + DMVCFRAMEWORK_VERSION);
+  Writeln('*****************************************************');
+  Writeln('** DMVCFramework Server ** build: ' + DMVCFRAMEWORK_VERSION + ' **');
+  Writeln('*****************************************************');
+  Writeln('** Server - PJC API Artista x Album                **');
+  Writeln('*****************************************************');
+  Writeln('');
+
   LCmd := 'start';
   if ParamCount >= 1 then
     LCmd := ParamStr(1);
@@ -53,7 +65,6 @@ begin
 
   LServer := TIdHTTPWebBrokerBridge.Create(nil);
   try
-    LServer.OnParseAuthentication := TMVCParseAuthentication.OnParseAuthentication;
     LServer.DefaultPort := APort;
     LServer.KeepAlive := True;
 
@@ -64,6 +75,7 @@ begin
     { more info about ListenQueue
       http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html }
     LServer.ListenQueue := 200;
+
     {required if you use JWT middleware }
     LServer.OnParseAuthentication := TMVCParseAuthentication.OnParseAuthentication;
 
@@ -100,6 +112,8 @@ begin
 end;
 
 begin
+  // cria pool de conexao com banco de dados
+//  CreatePoolConnection;
   ReportMemoryLeaksOnShutdown := True;
   IsMultiThread := True;
   try

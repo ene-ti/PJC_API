@@ -12,11 +12,14 @@ uses
   Web.WebBroker,
   IdContext,
   IdHTTPWebBrokerBridge,
-  u_ApiController in 'u_ApiController.pas',
-  u_ApiWebModule in 'u_ApiWebModule.pas' {ApiWebModule: TWebModule},
-  u_PoolConnection in 'u_PoolConnection.pas',
-  u_ArtistaClass in 'u_ArtistaClass.pas',
-  u_ArtistaService in 'u_ArtistaService.pas';
+  u_ApiController in 'units\u_ApiController.pas',
+  u_ApiWebModule in 'units\u_ApiWebModule.pas' {ApiWebModule: TWebModule},
+  u_ArtistaClass in 'units\u_ArtistaClass.pas',
+  u_ArtistaService in 'units\u_ArtistaService.pas',
+  u00_SetupINI in 'units\u00_SetupINI.pas' {frmSetupINI},
+  u00_FunPro in 'units\u00_FunPro.pas',
+  u00_Global in 'units\u00_Global.pas',
+  u00_Conexao in 'units\u00_Conexao.pas';
 
 {$R *.res}
 
@@ -41,16 +44,35 @@ begin
     begin
       Handled := False;
       Result := THandleCommandResult.Unknown;
+
+      // Write here your custom command for the REPL using the following form...
+      // ***
+      // Handled := False;
+      // if (Value = 'apiversion') then
+      // begin
+      // REPLEmit('Print my API version number');
+      // Result := THandleCommandResult.Continue;
+      // Handled := True;
+      // end
+      // else if (Value = 'datetime') then
+      // begin
+      // REPLEmit(DateTimeToStr(Now));
+      // Result := THandleCommandResult.Continue;
+      // Handled := True;
+      // end;
     end;
 
   LServer := TIdHTTPWebBrokerBridge.Create(nil);
   try
-    LServer.OnParseAuthentication := TMVCParseAuthentication.OnParseAuthentication;
     LServer.DefaultPort := APort;
     LServer.KeepAlive := True;
 
+    { more info about MaxConnections
+      http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html }
     LServer.MaxConnections := 0;
 
+    { more info about ListenQueue
+      http://ww2.indyproject.org/docsite/html/frames.html?frmname=topic&frmfile=index.html }
     LServer.ListenQueue := 200;
 
     {required if you use JWT middleware }
@@ -89,8 +111,7 @@ begin
 end;
 
 begin
-  // cria pool de conexao com banco de dados
-  CreatePoolConnection;
+  CargaParametrosIniciais;
 
   ReportMemoryLeaksOnShutdown := True;
   IsMultiThread := True;
@@ -98,7 +119,7 @@ begin
     if WebRequestHandler <> nil then
       WebRequestHandler.WebModuleClass := WebModuleClass;
     WebRequestHandlerProc.MaxConnections := 1024;
-    RunServer(8080);
+    RunServer(vgAppWebPorta);   // default = 8080
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

@@ -12,11 +12,14 @@ uses
   Web.WebBroker,
   IdContext,
   IdHTTPWebBrokerBridge,
-  u_ApiController in 'u_ApiController.pas',
-  u_ApiWebModule in 'u_ApiWebModule.pas' {ApiWebModule: TWebModule},
-  u_PoolConnection in 'u_PoolConnection.pas',
-  u_ArtistaClass in 'u_ArtistaClass.pas',
-  u_ArtistaService in 'u_ArtistaService.pas';
+  u_ApiController in 'units\u_ApiController.pas',
+  u_ApiWebModule in 'units\u_ApiWebModule.pas' {ApiWebModule: TWebModule},
+  u_ArtistaClass in 'units\u_ArtistaClass.pas',
+  u_ArtistaService in 'units\u_ArtistaService.pas',
+  u00_SetupINI in 'units\u00_SetupINI.pas' {frmSetupINI},
+  u00_FunPro in 'units\u00_FunPro.pas',
+  u00_Global in 'units\u00_Global.pas',
+  u00_Conexao in 'units\u00_Conexao.pas';
 
 {$R *.res}
 
@@ -108,8 +111,7 @@ begin
 end;
 
 begin
-  // cria pool de conexao com banco de dados
-  CreatePoolConnection;
+  CargaParametrosIniciais;
 
   ReportMemoryLeaksOnShutdown := True;
   IsMultiThread := True;
@@ -117,7 +119,7 @@ begin
     if WebRequestHandler <> nil then
       WebRequestHandler.WebModuleClass := WebModuleClass;
     WebRequestHandlerProc.MaxConnections := 1024;
-    RunServer(8080);
+    RunServer(StrToInt(vgAppWebPorta));   // default = 8080
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
