@@ -38,7 +38,7 @@ var
 begin
   FDConexao := TFDConnection.Create(nil);
   try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_FB;
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     CountDelete := FDConexao.ExecSQL(
       'delete from produtos where ID=?',
@@ -62,7 +62,7 @@ begin
 
   FDConexao := TFDConnection.Create(nil);
   try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_FB;
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     FDConexao.ExecSQL(
       'select * from produtos where ID=' + ACodProduto.ToString,
@@ -102,7 +102,7 @@ begin
     else
       StrWhere := 'where descricao like ''%' + ALikeDescricao + '%''';
 
-    FDConexao.ConnectionDefName := NOME_CONEXAO_FB;
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL('select * from produtos ' + StrWhere + ' order by id', TmpDataset);
 
     if not TmpDataset.IsEmpty then
@@ -149,7 +149,7 @@ begin
 
   FDConexao := TFDConnection.Create(nil);
   try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_FB;
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL(SQL_INSERT,
       [
         Aproduto.Gtin,
@@ -191,7 +191,7 @@ begin
 
   FDConexao := TFDConnection.Create(nil);
   try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_FB;
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
         Aproduto.Gtin,

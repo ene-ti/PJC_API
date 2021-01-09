@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2021/01/08 17:16:10.607,=C:\Projetos\Delphi\Unit1.pas</Transaction>
-    <Transaction>2021/01/08 17:16:28.794,=C:\Projetos\Delphi\Unit2.pas</Transaction>
-    <Transaction>2021/01/08 17:19:38.760,C:\Projetos\PJC\pjc_api\prj\u_ApiController.pas=C:\Projetos\Delphi\Unit1.pas</Transaction>
-    <Transaction>2021/01/08 17:20:09.257,C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.dfm=C:\Projetos\Delphi\Unit2.dfm</Transaction>
-    <Transaction>2021/01/08 17:20:09.257,C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.pas=C:\Projetos\Delphi\Unit2.pas</Transaction>
-    <Transaction>2021/01/08 17:21:06.058,C:\Projetos\PJC\pjc_api\prj\PJC_API_ArtAlbum.dproj=C:\Projetos\Delphi\Project1.dproj</Transaction>
-    <Transaction>2021/01/08 21:41:24.069,=C:\Projetos\PJC\pjc_api\prj\Unit1.pas</Transaction>
-    <Transaction>2021/01/08 21:41:49.106,=C:\Projetos\PJC\pjc_api\prj\UPoolConnection.pas</Transaction>
-    <Transaction>2021/01/08 21:42:05.345,=C:\Projetos\PJC\pjc_api\prj\ProdutosClass.pas</Transaction>
-    <Transaction>2021/01/08 21:42:24.562,=C:\Projetos\PJC\pjc_api\prj\ProdutosService.pas</Transaction>
-    <Transaction>2021/01/08 21:42:45.901,C:\Projetos\PJC\pjc_api\prj\u_PoolConnection.pas=C:\Projetos\PJC\pjc_api\prj\UPoolConnection.pas</Transaction>
-    <Transaction>2021/01/08 21:43:08.756,C:\Projetos\PJC\pjc_api\prj\u_ArtistaClass.pas=C:\Projetos\PJC\pjc_api\prj\ProdutosClass.pas</Transaction>
-    <Transaction>2021/01/08 21:43:21.300,C:\Projetos\PJC\pjc_api\prj\u_ArtistaService.pas=C:\Projetos\PJC\pjc_api\prj\ProdutosService.pas</Transaction>
+	<Transactions>
+    <Transaction>2021/01/08 17:16:10.000.607,=C:\Projetos\Delphi\Unit1.pas</Transaction>
+    <Transaction>2021/01/08 17:16:28.000.794,=C:\Projetos\Delphi\Unit2.pas</Transaction>
+    <Transaction>2021/01/08 17:19:38.000.760,C:\Projetos\Delphi\Unit1.pas=C:\Projetos\PJC\pjc_api\prj\u_ApiController.pas</Transaction>
+    <Transaction>2021/01/08 17:20:09.000.257,C:\Projetos\Delphi\Unit2.pas=C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.pas</Transaction>
+    <Transaction>2021/01/08 17:20:09.000.257,C:\Projetos\Delphi\Unit2.dfm=C:\Projetos\PJC\pjc_api\prj\u_ApiWebModule.dfm</Transaction>
+    <Transaction>2021/01/08 17:21:06.000.058,C:\Projetos\Delphi\Project1.dproj=C:\Projetos\PJC\pjc_api\prj\PJC_API_ArtAlbum.dproj</Transaction>
+    <Transaction>2021/01/08 21:41:24.000.069,=C:\Projetos\PJC\pjc_api\prj\Unit1.pas</Transaction>
+    <Transaction>2021/01/08 21:41:49.000.106,=C:\Projetos\PJC\pjc_api\prj\UPoolConnection.pas</Transaction>
+    <Transaction>2021/01/08 21:42:05.000.345,=C:\Projetos\PJC\pjc_api\prj\ProdutosClass.pas</Transaction>
+    <Transaction>2021/01/08 21:42:24.000.562,=C:\Projetos\PJC\pjc_api\prj\ProdutosService.pas</Transaction>
+    <Transaction>2021/01/08 21:42:45.000.901,C:\Projetos\PJC\pjc_api\prj\UPoolConnection.pas=C:\Projetos\PJC\pjc_api\prj\u_PoolConnection.pas</Transaction>
+    <Transaction>2021/01/08 21:43:08.000.756,C:\Projetos\PJC\pjc_api\prj\ProdutosClass.pas=C:\Projetos\PJC\pjc_api\prj\u_ArtistaClass.pas</Transaction>
+    <Transaction>2021/01/08 21:43:21.000.300,C:\Projetos\PJC\pjc_api\prj\ProdutosService.pas=C:\Projetos\PJC\pjc_api\prj\u_ArtistaService.pas</Transaction>
   </Transactions>
 </BorlandProject>

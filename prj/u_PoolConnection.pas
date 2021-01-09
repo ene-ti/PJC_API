@@ -15,7 +15,7 @@ uses
 procedure CreatePoolConnection;
 
 const
-  NOME_CONEXAO_FB = 'CONEXAO_SERVIDOR_DMC';
+  NOME_CONEXAO_BD = 'CONEXAO_SERVIDOR_DMC';
 
 implementation
 
@@ -28,21 +28,19 @@ begin
   oParametros := TStringList.Create;
   try
     oParametros.Clear;
-    oParametros.Add('DriverID=FB');
-    oParametros.Add('User_Name=sysdba');
-    oParametros.Add('Password=masterkey');
-    oParametros.Add('Protocol=TCPIP');
-    oParametros.Add('CharacterSet=WIN1252');
+    oParametros.Add('DriverID=MySQL');
     oParametros.Add('Server=localhost');
-    oParametros.Add('Port=3050');
-    oParametros.Add('Database=C:\Projetos\Teste-WKACBrMobile\bin\database\DADOS.FDB');
+    oParametros.Add('Port=3306');
+    oParametros.Add('User_Name=eneti');
+    oParametros.Add('Password=R&n0sa01');
+    oParametros.Add('Database=DB_PJC');
 
     // parametros para o controle do pool se necessário e quiser alterar
     //oParametros.Add('POOL_MaximumItems=50');
     //oParametros.Add('POOL_ExpireTimeout=9000');
     //oParametros.Add('POOL_CleanupTimeout=900000');
 
-    FDManager.AddConnectionDef(NOME_CONEXAO_FB, 'FB', oParametros);
+    FDManager.AddConnectionDef(NOME_CONEXAO_BD, 'MySQL', oParametros);
     FDManager.Open;
   finally
     oParametros.Free;
