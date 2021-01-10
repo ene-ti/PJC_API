@@ -7,21 +7,13 @@ uses
 
 type
   [MVCNameCaseAttribute(ncLowerCase)]
-  TProduto = class
+  TArtista = class
   private
-    FId: Integer;
-    FGtin: string;
-    FDescricao: string;
-    FValorVenda: Double;
-    FUnidade: string;
-    FDataCriacao: TDateTime;
+    Fart_id: Integer;
+    Fart_nome: string;
   public
-    property Id: Integer read FId write FId;
-    property Gtin: string read FGtin write FGtin;
-    property Descricao: string read FDescricao write FDescricao;
-    property ValorVenda: Double read FValorVenda write FValorVenda;
-    property DataCriacao: TDateTime read FDataCriacao write FDataCriacao;
-    property Unidade: string read FUnidade write FUnidade;
+    property art_id: Integer read Fart_id write Fart_id;
+    property art_nome: string read Fart_nome write Fart_nome;
   end;
 
 implementation

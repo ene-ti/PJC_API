@@ -77,7 +77,7 @@ begin
   // To enable compression (deflate, gzip) just add this middleware as the last one
   FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
 
-  FMVC.AddMiddleware(
+{  FMVC.AddMiddleware(
     TMVCBasicAuthenticationMiddleware.Create(
       TMVCDefaultAuthenticationHandler.New
         .SetOnAuthentication(
@@ -87,7 +87,7 @@ begin
         begin
           IsValid := AUserName.Equals('usu') and APassword.Equals('123');
         end
-  )));
+  )));  }
 end;
 
 procedure TApiWebModule.WebModuleDestroy(Sender: TObject);

@@ -64,7 +64,6 @@ object frmSetupINI: TfrmSetupINI
         Align = alTop
         Caption = ' Banco de Dados '
         TabOrder = 1
-        ExplicitLeft = 511
         object Label2: TLabel
           Left = 511
           Top = 24
@@ -182,8 +181,6 @@ object frmSetupINI: TfrmSetupINI
         Height = 89
         Align = alClient
         TabOrder = 2
-        ExplicitTop = 270
-        ExplicitHeight = 68
         object btnGrava: TBitBtn
           Left = 40
           Top = 10

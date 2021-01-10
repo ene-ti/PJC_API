@@ -156,7 +156,6 @@ procedure TfrmSetupINI.btnTesteClick(Sender: TObject);
 begin
   CargaParametrosIniciais;
 
-
  if CreatePoolConnection then
   begin
     MessageDlg('Teste de conexão:'            + #13#13 +
@@ -171,7 +170,6 @@ begin
        ' -> Banco Dados = ' + vgBancoDatabase + #13#13 +
        'Com erro!', mtError, [mbOK], 0);
   end;
-
 
 end;
 

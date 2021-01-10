@@ -6,9 +6,6 @@ unit u00_Global;
 {*********************************************************************}
 interface
 
-uses
-   Graphics;
-
 const
   NOME_CONEXAO_BD = 'CONEXAO_SERVIDOR_BD';
 
@@ -21,10 +18,9 @@ const
   C_nome_Arq_Ini      = C_nome_aplicacao + '.ini';
 
 var
-  vgAppWebPorta : String;
   vgPathAplicacao : String;
-  vgArqConfig : Boolean;
 
+  vgAppWebPorta : String;
   vgBancoDriverID,
   vgBancoServer,
   vgBancoPorta,

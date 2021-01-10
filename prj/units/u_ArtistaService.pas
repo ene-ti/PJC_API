@@ -6,121 +6,72 @@ uses
   System.Classes,
   System.SysUtils,
   System.Generics.Collections,
-
   u00_conexao,
   u_ArtistaClass,
 
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
-  FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, FireDAC.Phys, {FireDAC.VCLUI.Wait,} Data.DB,
-  FireDAC.Comp.Client, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB;
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Stan.Def,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt,
+  FireDAC.Phys,
+  FireDAC.VCLUI.Wait,
+  FireDAC.Comp.Client,
+  FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef,
+  Data.DB;
 
 type
-  TProdutoService = class
+  TArtistaService = class
   private
 
   public
-    class function GetProdutos(const ALikeDescricao: string): TObjectList<TProduto>;
-    class function GetProduto(const ACodProduto: Integer): TProduto;
-    class procedure Post(const AProduto: TProduto);
-    class procedure Update(const AId: Integer; const AProduto: TProduto);
-    class procedure Delete(const ACodProduto: Integer);
+    class function GetArtistas(const cWhere: string): TObjectList<TArtista>;
+    class function GetArtista(const cArt_id: Integer): TArtista;
+    class procedure Post(const AArtista: TArtista);
+    class procedure Update(const cArt_id: Integer; const AArtista: TArtista);
+    class procedure Delete(const cArt_id: Integer);
   end;
 
 implementation
 
 uses u00_Global, u00_FunPro;
 
-{ TProdutoService }
+{ TArtistaService }
 
-class procedure TProdutoService.Delete(const ACodProduto: Integer);
-var
-  FDConexao: TFDConnection;
-  CountDelete: Integer;
-begin
-  FDConexao := TFDConnection.Create(nil);
-  try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-
-    CountDelete := FDConexao.ExecSQL(
-      'delete from produtos where ID=?',
-      [ACodProduto],
-      [ftInteger]
-    );
-
-    if CountDelete = 0 then
-      raise EDatabaseError.Create('Nenhum produto foi excluido!');
-  finally
-    FDConexao.Free;
-  end;
-end;
-
-class function TProdutoService.GetProduto(const ACodProduto: Integer): TProduto;
+class function TArtistaService.GetArtistas(const cWhere: string): TObjectList<TArtista>;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
-begin
-  Result := TProduto.Create;
-
-  FDConexao := TFDConnection.Create(nil);
-  try
-    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-
-    FDConexao.ExecSQL(
-      'select * from produtos where ID=' + ACodProduto.ToString,
-      TmpDataset
-    );
-
-    if not TmpDataset.IsEmpty then
-    begin
-      Result.Id          := TmpDataset.FieldByName('ID').AsInteger;
-      Result.Gtin        := TmpDataset.FieldByName('GTIN').AsString;
-      Result.Descricao   := TmpDataset.FieldByName('DESCRICAO').AsString;
-      Result.ValorVenda  := TmpDataset.FieldByName('VL_VENDA').AsCurrency;
-      Result.Unidade     := TmpDataset.FieldByName('UN').AsString;
-      Result.DataCriacao := TmpDataset.FieldByName('DT_CRIACAO').AsDateTime;
-    end
-    else
-      raise EDatabaseError.CreateFmt('Produto "%d" não encontrado na base de dados!', [ACodProduto]);
-  finally
-    TmpDataset.Free;
-    FDConexao.Free;
-  end;
-end;
-
-class function TProdutoService.GetProdutos(const ALikeDescricao: string): TObjectList<TProduto>;
-var
-  FDConexao: TFDConnection;
-  TmpDataset: TDataSet;
-  Produto: TProduto;
+  AArtista: TArtista;
   StrWhere: string;
 begin
-  Result := TObjectList<TProduto>.Create;
+  Result := TObjectList<TArtista>.Create;
 
   FDConexao := TFDConnection.Create(nil);
   try
-    if ALikeDescricao.Trim.IsEmpty then
+    if cWhere.Trim.IsEmpty then
       StrWhere := ''
     else
-      StrWhere := 'where descricao like ''%' + ALikeDescricao + '%''';
+      StrWhere := 'where descricao like ''%' + cWhere + '%''';
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-    FDConexao.ExecSQL('select * from produtos ' + StrWhere + ' order by id', TmpDataset);
+    FDConexao.ExecSQL('select * from artista ' + StrWhere + ' order by art_id', TmpDataset);
 
     if not TmpDataset.IsEmpty then
     begin
       TmpDataset.First;
       while not TmpDataset.Eof do
       begin
-        Produto := TProduto.Create;
-        Produto.Id          := TmpDataset.FieldByName('ID').AsInteger;
-        Produto.Gtin        := TmpDataset.FieldByName('GTIN').AsString;
-        Produto.Descricao   := TmpDataset.FieldByName('DESCRICAO').AsString;
-        Produto.ValorVenda  := TmpDataset.FieldByName('VL_VENDA').AsCurrency;
-        Produto.Unidade     := TmpDataset.FieldByName('UN').AsString;
-        Produto.DataCriacao := TmpDataset.FieldByName('DT_CRIACAO').AsDateTime;
+        AArtista := TArtista.Create;
+        AArtista.art_id   := TmpDataset.FieldByName('art_id').AsInteger;
+        AArtista.art_nome := TmpDataset.FieldByName('art_nome').AsString;
 
-        Result.Add(Produto);
+        Result.Add(AArtista);
         TmpDataset.Next;
       end;
     end
@@ -132,37 +83,59 @@ begin
   end;
 end;
 
-class procedure TProdutoService.Post(const AProduto: TProduto);
+class function TArtistaService.GetArtista(const cArt_id: Integer): TArtista;
+var
+  FDConexao: TFDConnection;
+  TmpDataset: TDataSet;
+begin
+  Result := TArtista.Create;
+
+  FDConexao := TFDConnection.Create(nil);
+  try
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
+
+    FDConexao.ExecSQL(
+      'select * from artista where art_id=' + cArt_id.ToString,
+      TmpDataset
+    );
+
+    if not TmpDataset.IsEmpty then
+    begin
+      Result.art_id        := TmpDataset.FieldByName('ART_ID').AsInteger;
+      Result.art_nome      := TmpDataset.FieldByName('ART_NOME').AsString;
+    end
+    else
+      raise EDatabaseError.CreateFmt('Produto "%d" não encontrado na base de dados!', [cArt_id]);
+  finally
+    TmpDataset.Free;
+    FDConexao.Free;
+  end;
+end;
+
+class procedure TArtistaService.Post(const AArtista: TArtista);
 var
   FDConexao: TFDConnection;
 const
   SQL_INSERT: string =
-    'INSERT INTO PRODUTOS (                                ' + sLineBreak +
-    '  ID, GTIN, DESCRICAO, VL_VENDA, DT_CRIACAO, UN       ' + sLineBreak +
+    'INSERT INTO ATISTA (                                ' + sLineBreak +
+    '  ART_ID, ART_NOME       ' + sLineBreak +
     ') VALUES (                                            ' + sLineBreak +
-    '  (select coalesce(max(id) , 0) + 1 from produtos), :GTIN, :DESCRICAO, :VL_VENDA, CURRENT_TIMESTAMP, :UN ' + sLineBreak +
-    ')                                                     ' ;
+    '  (select coalesce(max(art_id) , 0) + 1 from artista), :art_nome ' + sLineBreak +
+    ')';
 begin
-  if AProduto.Descricao.Trim.IsEmpty then
-    raise EDatabaseError.Create('Descrição do produto é obrigatória');
-
-  if AProduto.ValorVenda <= 0 then
-    raise EDatabaseError.Create('valor do produto deve ser um valor maior que zero');
+  if AArtista.art_nome.Trim.IsEmpty then
+    raise EDatabaseError.Create('Nome do Artista é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL(SQL_INSERT,
       [
-        Aproduto.Gtin,
-        Aproduto.Descricao,
-        Aproduto.ValorVenda,
-        Aproduto.Unidade
+        AArtista.art_id,
+        AArtista.art_nome
       ],
       [
-        ftString,
-        ftString,
-        ftFloat,
+        ftInteger,
         ftString
       ]
     );
@@ -171,52 +144,68 @@ begin
   end;
 end;
 
-class procedure TProdutoService.Update(const AId: Integer; const AProduto: TProduto);
+class procedure TArtistaService.Update(const cArt_id: Integer; const AArtista: TArtista);
 var
   FDConexao: TFDConnection;
   CountAtu: Integer;
 
 const
   SQL_UPDATE: string =
-    'UPDATE PRODUTOS SET         ' + sLineBreak +
-    '  GTIN = :GTIN,             ' + sLineBreak +
-    '  DESCRICAO = :DESCRICAO,   ' + sLineBreak +
-    '  VL_VENDA = :VL_VENDA,     ' + sLineBreak +
-    '  UN = :UN                  ' + sLineBreak +
-    'WHERE (ID = :ID)            ';
+    'UPDATE ARTISTA SET         ' + sLineBreak +
+    '  art_id = :art_id,             ' + sLineBreak +
+    '  art_nome = :art_nome                  ' + sLineBreak +
+    'WHERE (art_id = :art_id)            ';
 begin
-  if AProduto.Descricao.Trim.IsEmpty then
-    raise EDatabaseError.Create('Descrição do produto é obrigatória');
-
-  if AProduto.ValorVenda <= 0 then
-    raise EDatabaseError.Create('valor do produto deve ser um valor maior que zero');
+  if AArtista.art_nome.Trim.IsEmpty then
+    raise EDatabaseError.Create('Nome do Artista é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
-        Aproduto.Gtin,
-        Aproduto.Descricao,
-        Aproduto.ValorVenda,
-        Aproduto.Unidade,
-        AId
+        AArtista.art_id,
+        AArtista.art_nome,
+        AArtista.art_id
       ],
       [
-        ftString,
-        ftString,
-        ftFloat,
+        ftInteger,
         ftString,
         ftInteger
       ]
     );
 
     if CountAtu <= 0 then
-      raise Exception.Create('Nenhum produto foi atualizado');
+      raise Exception.Create('Nenhum artista foi atualizado');
   finally
     FDConexao.Free;
   end;
 end;
+
+class procedure TArtistaService.Delete(const cArt_id: Integer);
+var
+  FDConexao: TFDConnection;
+  CountDelete: Integer;
+begin
+  FDConexao := TFDConnection.Create(nil);
+  try
+    FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
+
+    CountDelete := FDConexao.ExecSQL(
+      'delete from artista where art_id=?',
+      [cArt_id],
+      [ftInteger]
+    );
+
+    if CountDelete = 0 then
+      raise EDatabaseError.Create('Nenhum artista foi excluido!');
+  finally
+    FDConexao.Free;
+  end;
+end;
+
+
+
 
 end.
 

@@ -25,39 +25,40 @@ type
     procedure GetMyRootPage;
 
     //Sample CRUD Actions for a "Customer" entity
-    [MVCPath('/produtos')]
+    [MVCPath('/artistas')]
     [MVCHTTPMethod([httpGET])]
-    procedure GetProdutos;
+    procedure GetArtistas;
 
-    [MVCPath('/produtos/($id)')]
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpGET])]
-    procedure GetProduto(id: Integer);
+    procedure GetArtista(art_id: Integer);
 
-    [MVCPath('/produtos')]
+    [MVCPath('/artista')]
     [MVCHTTPMethod([httpPOST])]
-    procedure CreateProduto;
+    procedure CreateArtista;
 
-    [MVCPath('/produtos/($id)')]
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpPUT])]
-    procedure UpdateProduto(id: Integer);
+    procedure UpdateArtista(art_id: Integer);
 
-    [MVCPath('/produtos/($id)')]
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpDELETE])]
-    procedure DeleteProduto(id: Integer);
+    procedure DeleteArtista(art_id: Integer);
   end;
 
 implementation
 
 uses
   u_ArtistaService,
-  u_ArtistaClass;
+  u_ArtistaClass,
+  u00_Global;
 
 procedure TApiController.GetMyRootPage;
 begin
   ContentType := TMVCMediaType.TEXT_HTML;
   Render(
-    '<h1>Teste API DMVC</h1>' + sLineBreak +
-    '<p>API de testes utilizando DMC e REST</p>' + sLineBreak +
+    '<h1>'+ C_nome_aplicacao+C_versao_aplicacao+C_data_compilacao+'</h1>' + sLineBreak +
+    '<p>'+C_desc_aplicacao+'</p>' + sLineBreak +
     '</br>' + sLineBreak +
 
     '<dl>' + sLineBreak +
@@ -83,54 +84,54 @@ begin
 end;
 
 //Sample CRUD Actions for a "Customer" entity
-procedure TApiController.Getprodutos;
+procedure TApiController.GetArtistas;
 var
   StrQuery: string;
 begin
+
   StrQuery := Context.Request.QueryStringParam('like');
-
-  Render<TProduto>(TProdutoService.GetProdutos(StrQuery));
+  Render<TArtista>(TArtistaService.GetArtistas(StrQuery));
 
 end;
 
-procedure TApiController.Getproduto(id: Integer);
+procedure TApiController.GetArtista(art_id: Integer);
 begin
 
-  Render(TProdutoService.GetProduto(Id));
+  Render(TArtistaService.GetArtista(art_id));
 
 end;
 
-procedure TApiController.Createproduto;
+procedure TApiController.CreateArtista;
 var
-  Produto: TProduto;
+  AArtista: TArtista;
 begin
-  Produto := Context.Request.BodyAs<TProduto>;
+  AArtista := Context.Request.BodyAs<TArtista>;
   try
-    TProdutoService.Post(Produto);
-    Render(200, 'Produto criado com sucesso');
+    TArtistaService.Post(AArtista);
+    Render(200, 'Artista criado com sucesso');
   finally
-    Produto.Free;
+    AArtista.Free;
   end;
 end;
 
-procedure TApiController.Updateproduto(id: Integer);
+procedure TApiController.UpdateArtista(art_id: Integer);
 var
-  Produto: TProduto;
+  AArtista: TArtista;
 begin
-  Produto := Context.Request.BodyAs<TProduto>;
+  AArtista := Context.Request.BodyAs<TArtista>;
   try
-    TProdutoService.Update(Id, Produto);
-    Render(200, Format('Produto "%d" atualizado com sucesso', [Id]));
+    TArtistaService.Update(art_id, AArtista);
+    Render(200, Format('Artista "%d" atualizado com sucesso', [art_id]));
   finally
-    Produto.Free;
+    AArtista.Free;
   end;
 end;
 
-procedure TApiController.Deleteproduto(id: Integer);
+procedure TApiController.DeleteArtista(art_id: Integer);
 begin
 
-  TProdutoService.Delete(Id);
-  Render(200, Format('Produto "%d" apagado com sucesso', [Id]));
+  TArtistaService.Delete(art_id);
+  Render(200, Format('Artista "%d" apagado com sucesso', [art_id]));
 end;
 
 

@@ -12,7 +12,7 @@ uses
   ComCtrls, DateUtils;
 
 
-Function ChecaArqIni:Boolean;
+Procedure ChecaArqIni;
 Function AchaParametro(vConjunto,vParametro:String):String;
 Function CargaParametrosIniciais:Boolean;
 function TamanhoArquivo(vArquivo : String) : Integer;
@@ -92,33 +92,33 @@ implementation
 
 Uses u00_Global, u00_SetupINI, u00_Conexao;
 
-Function ChecaArqIni:Boolean;
+procedure ChecaArqIni;
 var
-  vPath : String;
+  vNomeArqIni : String;
 begin
-  result := False;
-  vPath  := vgPathAplicacao + C_nome_Arq_Ini;
+  vgPathAplicacao := ExtractFilePath(Application.ExeName);
 
-  if not FileExists(vPath) then
+  vNomeArqIni  := vgPathAplicacao + C_nome_Arq_Ini;
+
+  if not FileExists(vNomeArqIni) then
   begin
-    MessageDlg('Atenção o arquivo:' + #13#13 + vPath + #13#13 +
+    MessageDlg('Atenção o arquivo:' + #13#13 + vNomeArqIni + #13#13 +
                'Não foi encontrado ou pode estar com problema!' + #13 +
                'Pressione <OK> para fazer a configuração.', MTERROR, [MBOK], 0);
     Application.CreateForm(TfrmSetupINI, frmSetupINI);
     frmSetupINI.ShowModal;
     frmSetupINI.Free;
   end;
-
-  if (TamanhoArquivo(vPath) < 1) then
+  if (CargaParametrosIniciais = false) then
   begin
-    MessageDlg('Atenção o arquivo:' + #13#13 + vPath + #13#13 +
-               'ainda pode estar com problema!' + #13 +
-               'O Programa sera encerrado. Verifique.', MTERROR, [MBOK], 0);
-    Application.Terminate;
-    Exit;
+    MessageDlg('Atenção o arquivo:' + #13#13 + vNomeArqIni + #13#13 +
+               'pode estar com problema!' + #13 +
+               'Pressione <OK> para fazer a configuração.' + #13#13 +
+               'Apos ajutes, tente novamente.', MTERROR, [MBOK], 0);
+    Application.CreateForm(TfrmSetupINI, frmSetupINI);
+    frmSetupINI.ShowModal;
+    frmSetupINI.Free;
   end;
-
-  result := True;
 end;
 
 Function AchaParametro(vConjunto,vParametro:String):String;
@@ -136,9 +136,7 @@ end;
 Function CargaParametrosIniciais:Boolean;
 begin
   Result := True;
-
   vgPathAplicacao := ExtractFilePath(Application.ExeName);
-  ChecaArqIni;
 
   vgAppWebPorta := AchaParametro('Aplicacao','AppWebPorta');
 
@@ -158,19 +156,7 @@ begin
      (vgBancoDatabase = '') then
   begin
     Result := False;
-    MessageDlg('Atenção o arquivo:' + #13#13 + vgPathAplicacao + C_nome_Arq_Ini + #13#13 +
-               'pode estar com problema!' + #13 +
-               'Pressione <OK> para fazer a configuração.' + #13#13 +
-               'Apos ajutes, tente novamente.', MTERROR, [MBOK], 0);
-    Application.CreateForm(TfrmSetupINI, frmSetupINI);
-    frmSetupINI.ShowModal;
-    frmSetupINI.Free;
-    Application.Terminate;
-    exit;
   end;
-
-  // cria pool de conexao com banco de dados
-  CreatePoolConnection;
 end;
 
 function TamanhoArquivo(vArquivo : String) : Integer;

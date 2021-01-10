@@ -53,7 +53,7 @@ begin
     //oParametros.Add('POOL_ExpireTimeout=9000');
     //oParametros.Add('POOL_CleanupTimeout=900000');
 
-    FDManager.AddConnectionDef(NOME_CONEXAO_BD, 'MySQL', oParametros);
+    FDManager.AddConnectionDef(NOME_CONEXAO_BD, vgBancoDriverID, oParametros);
     FDManager.Open;
 
     FDConnection1 := TFDConnection.Create(nil);

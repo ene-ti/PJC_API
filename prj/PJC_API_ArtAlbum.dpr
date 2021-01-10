@@ -111,17 +111,22 @@ begin
 end;
 
 begin
-  CargaParametrosIniciais;
+  ChecaArqIni;
+  if (CargaParametrosIniciais = true) then
+  begin
+    // cria pool de conexao com banco de dados
+    CreatePoolConnection;
 
-  ReportMemoryLeaksOnShutdown := True;
-  IsMultiThread := True;
-  try
-    if WebRequestHandler <> nil then
-      WebRequestHandler.WebModuleClass := WebModuleClass;
-    WebRequestHandlerProc.MaxConnections := 1024;
-    RunServer(StrToInt(vgAppWebPorta));   // default = 8080
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
+    ReportMemoryLeaksOnShutdown := True;
+    IsMultiThread := True;
+    try
+      if WebRequestHandler <> nil then
+        WebRequestHandler.WebModuleClass := WebModuleClass;
+      WebRequestHandlerProc.MaxConnections := 1024;
+      RunServer(StrToIntDef(vgAppWebPorta, 8080));   // default = 8080
+    except
+      on E: Exception do
+       Writeln(E.ClassName, ': ', E.Message);
+    end;
   end;
 end.
