@@ -7,12 +7,8 @@ uses
    StdCtrls, Controls, ExtCtrls, //AppEvent,
   IniFiles, Mask, //ToolEdit,
   CheckLst, //IBOServices,
-  Buttons, Vcl.ComCtrls,
+  Buttons, Vcl.ComCtrls;
 
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
-  FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, FireDAC.Phys, {FireDAC.VCLUI.Wait,} Data.DB,
-  FireDAC.Comp.Client, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB;
 
 type
   TfrmSetupINI = class(TForm)

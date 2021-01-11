@@ -21,8 +21,8 @@ uses
   FireDAC.Phys,
   FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client,
-  FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef,
+  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,                //MySql
+  FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB, //Firebirdb
   Data.DB;
 
 type
@@ -76,7 +76,7 @@ begin
       end;
     end
     else
-      raise EDatabaseError.Create('Nenhum produto cadastrado na base de dados!');
+      raise EDatabaseError.Create('Nenhum artista cadastrado na base de dados!');
   finally
     TmpDataset.Free;
     FDConexao.Free;

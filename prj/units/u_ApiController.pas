@@ -25,24 +25,23 @@ type
     [MVCHTTPMethod([httpGET])]
     procedure GetMyRootPage;
 
-    //Sample CRUD Actions for a "Customer" entity
     [MVCPath('/artistas')]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtistas;
 
-    [MVCPath('/artista/($art_id)')]
+    [MVCPath('/artistas/($art_id)')]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtista(art_id: Integer);
 
-    [MVCPath('/artista')]
+    [MVCPath('/artistas')]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateArtista;
 
-    [MVCPath('/artista/($art_id)')]
+    [MVCPath('/artistas/($art_id)')]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateArtista(art_id: Integer);
 
-    [MVCPath('/artista/($art_id)')]
+    [MVCPath('/artistas/($art_id)')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteArtista(art_id: Integer);
   end;
@@ -58,7 +57,7 @@ procedure TApiController.GetMyRootPage;
 begin
   ContentType := TMVCMediaType.TEXT_HTML;
   Render(
-    '<h1>'+ C_nome_aplicacao+C_versao_aplicacao+C_data_compilacao+'</h1>' + sLineBreak +
+    '<h1>'+ C_nome_aplicacao+ ' - '+C_versao_aplicacao+ ' - '+C_data_compilacao+'</h1>' + sLineBreak +
     '<p>'+C_desc_aplicacao+'</p>' + sLineBreak +
     '</br>' + sLineBreak +
 
