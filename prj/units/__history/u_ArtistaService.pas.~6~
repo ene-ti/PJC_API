@@ -154,7 +154,7 @@ const
     'UPDATE ARTISTA SET         ' + sLineBreak +
     '  art_id = :art_id,             ' + sLineBreak +
     '  art_nome = :art_nome                  ' + sLineBreak +
-    'WHERE (art_id = :artid)            ';
+    'WHERE (art_id = :art_id)            ';
 begin
   if AArtista.art_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome do Artista é obrigatório');
@@ -166,7 +166,7 @@ begin
       [
         AArtista.art_id,
         AArtista.art_nome,
-        cArt_id
+        AArtista.art_id
       ],
       [
         ftInteger,

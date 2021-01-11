@@ -103,8 +103,11 @@ end;
 procedure TApiController.CreateArtista;
 var
   AArtista: TArtista;
+  teste : string;
 begin
   // metodo POST: /artista
+  teste := Context.Request.Body;
+  showmessage('teste ' + teste);
   AArtista := Context.Request.BodyAs<TArtista>;
   try
     TArtistaService.Post(AArtista);

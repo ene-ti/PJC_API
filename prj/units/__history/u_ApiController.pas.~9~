@@ -92,19 +92,24 @@ begin
   // metodo GET: /artistas
   StrQuery := Context.Request.QueryStringParam('like');
   Render<TArtista>(TArtistaService.GetArtistas(StrQuery));
+
 end;
 
 procedure TApiController.GetArtista(art_id: Integer);
 begin
   // metodo GET: /artista/($art_id)
   Render(TArtistaService.GetArtista(art_id));
+
 end;
 
 procedure TApiController.CreateArtista;
 var
   AArtista: TArtista;
+  teste : string;
 begin
   // metodo POST: /artista
+  teste := Context.Request.Body;
+  showmessage('teste ' + teste);
   AArtista := Context.Request.BodyAs<TArtista>;
   try
     TArtistaService.Post(AArtista);

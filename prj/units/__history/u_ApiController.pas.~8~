@@ -89,22 +89,26 @@ procedure TApiController.GetArtistas;
 var
   StrQuery: string;
 begin
-  // metodo GET: /artistas
+
   StrQuery := Context.Request.QueryStringParam('like');
   Render<TArtista>(TArtistaService.GetArtistas(StrQuery));
+
 end;
 
 procedure TApiController.GetArtista(art_id: Integer);
 begin
-  // metodo GET: /artista/($art_id)
+
   Render(TArtistaService.GetArtista(art_id));
+
 end;
 
 procedure TApiController.CreateArtista;
 var
   AArtista: TArtista;
+  teste : string;
 begin
-  // metodo POST: /artista
+  teste := Context.Request.Body;
+  showmessage('teste ' + teste);
   AArtista := Context.Request.BodyAs<TArtista>;
   try
     TArtistaService.Post(AArtista);
@@ -118,7 +122,6 @@ procedure TApiController.UpdateArtista(art_id: Integer);
 var
   AArtista: TArtista;
 begin
-  // metodo PUT: /artista/($art_id)
   AArtista := Context.Request.BodyAs<TArtista>;
   try
     TArtistaService.Update(art_id, AArtista);
@@ -130,7 +133,7 @@ end;
 
 procedure TApiController.DeleteArtista(art_id: Integer);
 begin
-  // metodo DELETE: /artista/($art_id)
+
   TArtistaService.Delete(art_id);
   Render(200, Format('Artista "%d" apagado com sucesso', [art_id]));
 end;
