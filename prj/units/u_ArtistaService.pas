@@ -57,7 +57,7 @@ begin
     if cWhere.Trim.IsEmpty then
       StrWhere := ''
     else
-      StrWhere := 'where descricao like ''%' + cWhere + '%''';
+      StrWhere := 'where art_nome like ''%' + cWhere + '%''';
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL('select * from artista ' + StrWhere + ' order by art_id', TmpDataset);
