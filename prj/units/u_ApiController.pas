@@ -29,19 +29,23 @@ type
     [MVCHTTPMethod([httpGET])]
     procedure GetArtistas;
 
-    [MVCPath('/artistas/($art_id)')]
+    [MVCPath('/artistascategoria')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetArtistasCategoria;
+
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtista(art_id: Integer);
 
-    [MVCPath('/artistas')]
+    [MVCPath('/artista')]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateArtista;
 
-    [MVCPath('/artistas/($art_id)')]
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateArtista(art_id: Integer);
 
-    [MVCPath('/artistas/($art_id)')]
+    [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteArtista(art_id: Integer);
   end;
@@ -83,14 +87,31 @@ begin
   inherited;
 end;
 
-//Sample CRUD Actions for a "Customer" entity
+
 procedure TApiController.GetArtistas;
 var
-  StrQuery: string;
+  StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
 begin
-  // metodo GET: /artistas
-  StrQuery := Context.Request.QueryStringParam('like');
-  Render<TArtista>(TArtistaService.GetArtistas(StrQuery));
+  // metodo GET: /artistas / QUERY PARAMS (por ART_NOME)
+  StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
+  StrOrderBy   := Context.Request.QueryStringParam('orderby');   // ordenação ASC/DSC
+  StrRegAtual  := Context.Request.QueryStringParam('regatual');  // Nr Reg Atual
+  StrQtdReg    := Context.Request.QueryStringParam('qtdereg');   // Qtde Reg Paginação
+
+  Render<TArtista>(TArtistaService.GetArtistas('ART_NOME', StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg));
+end;
+
+procedure TApiController.GetArtistasCategoria;
+var
+  StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
+begin
+  // metodo GET: /artistas / QUERY PARAMS (por ART_CATEGORIA)
+  StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
+  StrOrderBy   := Context.Request.QueryStringParam('orderby');   // ordenação ASC/DSC
+  StrRegAtual  := Context.Request.QueryStringParam('regatual');  // Nr Reg Atual
+  StrQtdReg    := Context.Request.QueryStringParam('qtdereg');   // Qtde Reg Paginação
+
+  Render<TArtista>(TArtistaService.GetArtistas('ART_CATEGORIA', StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg));
 end;
 
 procedure TApiController.GetArtista(art_id: Integer);
@@ -106,7 +127,7 @@ begin
   // metodo POST: /artista
   AArtista := Context.Request.BodyAs<TArtista>;
   try
-    TArtistaService.Post(AArtista);
+    TArtistaService.CreateArtista(AArtista);
     Render(200, 'Artista criado com sucesso');
   finally
     AArtista.Free;
@@ -120,8 +141,8 @@ begin
   // metodo PUT: /artista/($art_id)
   AArtista := Context.Request.BodyAs<TArtista>;
   try
-    TArtistaService.Update(art_id, AArtista);
-    Render(200, Format('Artista "%d" atualizado com sucesso', [art_id]));
+    TArtistaService.UpdateArtista(art_id, AArtista);
+    Render(200, Format('Artista %d atualizado com sucesso', [art_id]));
   finally
     AArtista.Free;
   end;
@@ -130,8 +151,8 @@ end;
 procedure TApiController.DeleteArtista(art_id: Integer);
 begin
   // metodo DELETE: /artista/($art_id)
-  TArtistaService.Delete(art_id);
-  Render(200, Format('Artista "%d" apagado com sucesso', [art_id]));
+  TArtistaService.DeleteArtista(art_id);
+  Render(200, Format('Artista %d apagado com sucesso', [art_id]));
 end;
 
 

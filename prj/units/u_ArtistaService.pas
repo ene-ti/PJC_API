@@ -30,11 +30,11 @@ type
   private
 
   public
-    class function GetArtistas(const cWhere: string): TObjectList<TArtista>;
+    class function GetArtistas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TArtista>;
     class function GetArtista(const cArt_id: Integer): TArtista;
-    class procedure Post(const AArtista: TArtista);
-    class procedure Update(const cArt_id: Integer; const AArtista: TArtista);
-    class procedure Delete(const cArt_id: Integer);
+    class procedure CreateArtista(const AArtista: TArtista);
+    class procedure UpdateArtista(const cArt_id: Integer; const AArtista: TArtista);
+    class procedure DeleteArtista(const cArt_id: Integer);
   end;
 
 implementation
@@ -43,36 +43,60 @@ uses u00_Global, u00_FunPro;
 
 { TArtistaService }
 
-class function TArtistaService.GetArtistas(const cWhere: string): TObjectList<TArtista>;
+class function TArtistaService.GetArtistas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TArtista>;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
   AArtista: TArtista;
-  StrWhere: string;
+  vWhereLike, vOrderBy: string;
+  vRegAtual, vQtdReg, vIni, vCont: integer;
 begin
   Result := TObjectList<TArtista>.Create;
 
   FDConexao := TFDConnection.Create(nil);
   try
+    vRegAtual := StrToIntDef(cRegAtual,0);
+    vQtdReg := StrToIntDef(cQtdReg,0);
+
     if cWhere.Trim.IsEmpty then
-      StrWhere := ''
+      vWhereLike := ' '
     else
-      StrWhere := 'where art_nome like ''%' + cWhere + '%''';
+      vWhereLike := ' WHERE ' + cField + ' LIKE ''%' + cWhere + '%'' ';
+
+    if cOrderBy.Trim.IsEmpty then
+      vOrderBy := ' ORDER BY ART_ID '
+    else
+      vOrderBy := ' ORDER BY ART_NOME ' + cOrderBy;
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-    FDConexao.ExecSQL('select * from artista ' + StrWhere + ' order by art_id', TmpDataset);
+    FDConexao.ExecSQL('SELECT * FROM ARTISTA ' + vWhereLike + vOrderBy, TmpDataset);
 
     if not TmpDataset.IsEmpty then
     begin
       TmpDataset.First;
+      vIni := 0;
+      vCont := 0;
       while not TmpDataset.Eof do
       begin
+        vIni := vIni+1;
+        if (vRegAtual > 0) and (vIni <= vRegAtual) then
+        begin
+          TmpDataset.Next;
+          Continue;
+        end;
+        vCont := vCont+1;
+
         AArtista := TArtista.Create;
-        AArtista.art_id   := TmpDataset.FieldByName('art_id').AsInteger;
-        AArtista.art_nome := TmpDataset.FieldByName('art_nome').AsString;
+        AArtista.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
+        AArtista.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
+        AArtista.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
 
         Result.Add(AArtista);
         TmpDataset.Next;
+        if (vQtdReg > 0) and (vCont >= vQtdReg) then
+        begin
+          break;
+        end;
       end;
     end
     else
@@ -95,7 +119,7 @@ begin
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     FDConexao.ExecSQL(
-      'select * from artista where art_id=' + cArt_id.ToString,
+      'SELECT * FROM ARTISTA WHERE ART_ID = ' + cArt_id.ToString,
       TmpDataset
     );
 
@@ -103,39 +127,42 @@ begin
     begin
       Result.art_id        := TmpDataset.FieldByName('ART_ID').AsInteger;
       Result.art_nome      := TmpDataset.FieldByName('ART_NOME').AsString;
+      Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
     end
     else
-      raise EDatabaseError.CreateFmt('Produto "%d" não encontrado na base de dados!', [cArt_id]);
+      raise EDatabaseError.CreateFmt('Artista "%d" não encontrado na base de dados!', [cArt_id]);
   finally
     TmpDataset.Free;
     FDConexao.Free;
   end;
 end;
 
-class procedure TArtistaService.Post(const AArtista: TArtista);
+class procedure TArtistaService.CreateArtista(const AArtista: TArtista);
 var
   FDConexao: TFDConnection;
 const
   SQL_INSERT: string =
-    'INSERT INTO ARTISTA (                                ' + sLineBreak +
-    '  ART_ID, ART_NOME       ' + sLineBreak +
-    ') VALUES (                                            ' + sLineBreak +
-    '  :art_id, :art_nome ' + sLineBreak +
+    'INSERT INTO ARTISTA (           ' + sLineBreak +
+    '  ART_NOME, ART_CATEGORIA       ' + sLineBreak +
+    ') VALUES (                      ' + sLineBreak +
+    '  :ART_NOME, :ART_CATEGORIA     ' + sLineBreak +
     ')';
 begin
   if AArtista.art_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome do Artista é obrigatório');
+  if AArtista.art_categoria.Trim.IsEmpty then
+    raise EDatabaseError.Create('Categoria do Artista é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL(SQL_INSERT,
       [
-        AArtista.art_id,
-        AArtista.art_nome
+        AArtista.art_nome,
+        AArtista.art_categoria
       ],
       [
-        ftInteger,
+        ftString,
         ftString
       ]
     );
@@ -144,32 +171,34 @@ begin
   end;
 end;
 
-class procedure TArtistaService.Update(const cArt_id: Integer; const AArtista: TArtista);
+class procedure TArtistaService.UpdateArtista(const cArt_id: Integer; const AArtista: TArtista);
 var
   FDConexao: TFDConnection;
   CountAtu: Integer;
 
 const
   SQL_UPDATE: string =
-    'UPDATE ARTISTA SET         ' + sLineBreak +
-    '  art_id = :art_id,             ' + sLineBreak +
-    '  art_nome = :art_nome                  ' + sLineBreak +
-    'WHERE (art_id = :artid)            ';
+    'UPDATE ARTISTA SET                ' + sLineBreak +
+    '  ART_NOME = :ART_NOME,           ' + sLineBreak +
+    '  ART_CATEGORIA = :ART_CATEGORIA  ' + sLineBreak +
+    'WHERE ART_ID = :ART_ID            ';
 begin
   if AArtista.art_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome do Artista é obrigatório');
+  if AArtista.art_categoria.Trim.IsEmpty then
+    raise EDatabaseError.Create('Categoria do Artista é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
-        AArtista.art_id,
         AArtista.art_nome,
+        AArtista.art_categoria,
         cArt_id
       ],
       [
-        ftInteger,
+        ftString,
         ftString,
         ftInteger
       ]
@@ -182,7 +211,7 @@ begin
   end;
 end;
 
-class procedure TArtistaService.Delete(const cArt_id: Integer);
+class procedure TArtistaService.DeleteArtista(const cArt_id: Integer);
 var
   FDConexao: TFDConnection;
   CountDelete: Integer;
@@ -192,13 +221,13 @@ begin
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     CountDelete := FDConexao.ExecSQL(
-      'delete from artista where art_id=?',
+      'DELETE FROM ARTISTA WHERE ART_ID = :ART_ID',
       [cArt_id],
       [ftInteger]
     );
 
     if CountDelete = 0 then
-      raise EDatabaseError.Create('Nenhum artista foi excluido!');
+      raise EDatabaseError.Create('Nenhum Artista foi excluido!');
   finally
     FDConexao.Free;
   end;

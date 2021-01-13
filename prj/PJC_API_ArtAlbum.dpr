@@ -19,7 +19,9 @@ uses
   u00_SetupINI in 'units\u00_SetupINI.pas' {frmSetupINI},
   u00_FunPro in 'units\u00_FunPro.pas',
   u00_Global in 'units\u00_Global.pas',
-  u00_Conexao in 'units\u00_Conexao.pas';
+  u00_Conexao in 'units\u00_Conexao.pas',
+  u_AlbumClass in 'units\u_AlbumClass.pas',
+  u_AlbumService in 'units\u_AlbumService.pas';
 
 {$R *.res}
 
