@@ -30,11 +30,11 @@ type
   private
 
   public
-    class function GetAlbums(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TAlbum>;
-    class function GetAlbum(const cArt_id: Integer): TAlbum;
+    class function GetAlbuns(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TAlbum>;
+    class function GetAlbum(const cAlb_id: Integer): TAlbum;
     class procedure CreateAlbum(const AAlbum: TAlbum);
-    class procedure UpdateAlbum(const cArt_id: Integer; const AAlbum: TAlbum);
-    class procedure DeleteAlbum(const cArt_id: Integer);
+    class procedure UpdateAlbum(const cAlb_id: Integer; const AAlbum: TAlbum);
+    class procedure DeleteAlbum(const cAlb_id: Integer);
   end;
 
 implementation
@@ -43,7 +43,7 @@ uses u00_Global, u00_FunPro;
 
 { TAlbumService }
 
-class function TAlbumService.GetAlbums(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TAlbum>;
+class function TAlbumService.GetAlbuns(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TAlbum>;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
@@ -64,12 +64,14 @@ begin
       vWhereLike := ' WHERE ' + cField + ' LIKE ''%' + cWhere + '%'' ';
 
     if cOrderBy.Trim.IsEmpty then
-      vOrderBy := ' ORDER BY ART_ID '
+      vOrderBy := ' ORDER BY ART_ID, ALB_ID '
     else
-      vOrderBy := ' ORDER BY ART_NOME ' + cOrderBy;
+      vOrderBy := ' ORDER BY ART_NOME, ALB_NOME ' + cOrderBy;
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-    FDConexao.ExecSQL('SELECT * FROM Album ' + vWhereLike + vOrderBy, TmpDataset);
+    FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ART.ART_ID = ALB.ID_ART ' +
+                      vWhereLike + vOrderBy, TmpDataset);
 
     if not TmpDataset.IsEmpty then
     begin
@@ -90,6 +92,9 @@ begin
         AAlbum.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
         AAlbum.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
         AAlbum.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
+        AAlbum.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
+        AAlbum.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
+        AAlbum.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
 
         Result.Add(AAlbum);
         TmpDataset.Next;
@@ -107,7 +112,7 @@ begin
   end;
 end;
 
-class function TAlbumService.GetAlbum(const cArt_id: Integer): TAlbum;
+class function TAlbumService.GetAlbum(const cAlb_id: Integer): TAlbum;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
@@ -118,19 +123,21 @@ begin
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
-    FDConexao.ExecSQL(
-      'SELECT * FROM Album WHERE ART_ID = ' + cArt_id.ToString,
-      TmpDataset
-    );
+    FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ART.ART_ID = ALB.ID_ART ' +
+                      '  WHERE ALB_ID = ' + cAlb_id.ToString, TmpDataset    );
 
     if not TmpDataset.IsEmpty then
     begin
-      Result.art_id        := TmpDataset.FieldByName('ART_ID').AsInteger;
-      Result.art_nome      := TmpDataset.FieldByName('ART_NOME').AsString;
-      Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
+        Result.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
+        Result.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
+        Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
+        Result.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
+        Result.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
+        Result.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
     end
     else
-      raise EDatabaseError.CreateFmt('Album "%d" não encontrado na base de dados!', [cArt_id]);
+      raise EDatabaseError.CreateFmt('Album "%d" não encontrado na base de dados!', [cAlb_id]);
   finally
     TmpDataset.Free;
     FDConexao.Free;
@@ -142,28 +149,28 @@ var
   FDConexao: TFDConnection;
 const
   SQL_INSERT: string =
-    'INSERT INTO Album (           ' + sLineBreak +
-    '  ART_NOME, ART_CATEGORIA       ' + sLineBreak +
-    ') VALUES (                      ' + sLineBreak +
-    '  :ART_NOME, :ART_CATEGORIA     ' + sLineBreak +
+    'INSERT INTO ALBUM (      ' + sLineBreak +
+    '  ALB_NOME, ID_ART       ' + sLineBreak +
+    ') VALUES (               ' + sLineBreak +
+    '  :ALB_NOME, :ID_ART     ' + sLineBreak +
     ')';
 begin
-  if AAlbum.art_nome.Trim.IsEmpty then
+  if AAlbum.alb_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome do Album é obrigatório');
-  if AAlbum.art_categoria.Trim.IsEmpty then
-    raise EDatabaseError.Create('Categoria do Album é obrigatório');
+  if AAlbum.id_art = 0 then
+    raise EDatabaseError.Create('ID do Artista do Album é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL(SQL_INSERT,
       [
-        AAlbum.art_nome,
-        AAlbum.art_categoria
+        AAlbum.alb_nome,
+        AAlbum.id_art
       ],
       [
         ftString,
-        ftString
+        ftInteger
       ]
     );
   finally
@@ -171,35 +178,35 @@ begin
   end;
 end;
 
-class procedure TAlbumService.UpdateAlbum(const cArt_id: Integer; const AAlbum: TAlbum);
+class procedure TAlbumService.UpdateAlbum(const cAlb_id: Integer; const AAlbum: TAlbum);
 var
   FDConexao: TFDConnection;
   CountAtu: Integer;
 
 const
   SQL_UPDATE: string =
-    'UPDATE Album SET                ' + sLineBreak +
-    '  ART_NOME = :ART_NOME,           ' + sLineBreak +
-    '  ART_CATEGORIA = :ART_CATEGORIA  ' + sLineBreak +
-    'WHERE ART_ID = :ART_ID            ';
+    'UPDATE ALBUM SET                ' + sLineBreak +
+    '  ALB_NOME = :ALB_NOME,           ' + sLineBreak +
+    '  ID_ART = :ID_ART  ' + sLineBreak +
+    'WHERE ALB_ID = :ALB_ID            ';
 begin
-  if AAlbum.art_nome.Trim.IsEmpty then
+  if AAlbum.alb_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome do Album é obrigatório');
-  if AAlbum.art_categoria.Trim.IsEmpty then
-    raise EDatabaseError.Create('Categoria do Album é obrigatório');
+  if AAlbum.id_art = 0 then
+    raise EDatabaseError.Create('ID do Artista do Album é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
-        AAlbum.art_nome,
-        AAlbum.art_categoria,
-        cArt_id
+        AAlbum.alb_nome,
+        AAlbum.id_art,
+        cAlb_id
       ],
       [
         ftString,
-        ftString,
+        ftInteger,
         ftInteger
       ]
     );
@@ -211,7 +218,7 @@ begin
   end;
 end;
 
-class procedure TAlbumService.DeleteAlbum(const cArt_id: Integer);
+class procedure TAlbumService.DeleteAlbum(const cAlb_id: Integer);
 var
   FDConexao: TFDConnection;
   CountDelete: Integer;
@@ -221,8 +228,8 @@ begin
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     CountDelete := FDConexao.ExecSQL(
-      'DELETE FROM Album WHERE ART_ID = :ART_ID',
-      [cArt_id],
+      'DELETE FROM ALBUM WHERE ALB_ID = :ALB_ID',
+      [cAlb_id],
       [ftInteger]
     );
 
