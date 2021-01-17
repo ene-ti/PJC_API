@@ -31,10 +31,10 @@ type
 
   public
     class function GetCapas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TCapa>;
-    class function GetCapa(const cAlb_id: Integer): TCapa;
-    class procedure CreateAlbum(const AAlbum: TCapa);
-    class procedure UpdateAlbum(const cAlb_id: Integer; const AAlbum: TCapa);
-    class procedure DeleteAlbum(const cAlb_id: Integer);
+    class function GetCapa(const cCp_id: Integer): TCapa;
+    class procedure CreateCapa(const ACapa: TCapa);
+    class procedure UpdateCapa(const cCp_id: Integer; const ACapa: TCapa);
+    class procedure DeleteCapa(const cCp_id: Integer);
   end;
 
 implementation
@@ -70,7 +70,7 @@ begin
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
-                      ' LEFT OUTER JOIN ALBUM ALB ON ART.ART_ID = ALB.ID_ART ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ID_ART = ART.ART_ID ' +
                       ' LEFT OUTER JOIN CAPA CAP ON CAP.ID_ALB = ALB.ALB_ID ' +
                       vWhereLike + vOrderBy, TmpDataset);
 
@@ -116,7 +116,7 @@ begin
   end;
 end;
 
-class function TCapaService.GetCapa(const cAlb_id: Integer): TCapa;
+class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
@@ -128,9 +128,9 @@ begin
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
-                      ' LEFT OUTER JOIN ALBUM ALB ON ART.ART_ID = ALB.ID_ART ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ID_ART = ART.ART_ID ' +
                       ' LEFT OUTER JOIN CAPA CAP ON CAP.ID_ALB = ALB.ALB_ID ' +
-                      '  WHERE ALB_ID = ' + cAlb_id.ToString, TmpDataset    );
+                      '  WHERE ALB_ID = ' + cCp_id.ToString, TmpDataset    );
 
     if not TmpDataset.IsEmpty then
     begin
@@ -145,14 +145,14 @@ begin
         Result.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
     end
     else
-      raise EDatabaseError.CreateFmt('Album "%d" não encontrado na base de dados!', [cAlb_id]);
+      raise EDatabaseError.CreateFmt('Capa "%d" não encontrada na base de dados!', [cCp_id]);
   finally
     TmpDataset.Free;
     FDConexao.Free;
   end;
 end;
 
-class procedure TCapaService.CreateAlbum(const AAlbum: TCapa);
+class procedure TCapaService.CreateCapa(const ACapa: TCapa);
 var
   FDConexao: TFDConnection;
 const
@@ -165,8 +165,8 @@ const
 begin
   if ACapa.cp_url.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome da Capa é obrigatório');
-  if ACapa.id_art = 0 then
-    raise EDatabaseError.Create('ID do Capa do Album é obrigatório');
+  if ACapa.id_alb = 0 then
+    raise EDatabaseError.Create('ID da Capa é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
@@ -177,8 +177,8 @@ begin
         ACapa.cp_url
       ],
       [
-        ftString,
-        ftInteger
+        ftInteger,
+        ftString
       ]
     );
   finally
@@ -186,7 +186,7 @@ begin
   end;
 end;
 
-class procedure TCapaService.UpdateCapa(const cAlb_id: Integer; const AAlbum: TCapa);
+class procedure TCapaService.UpdateCapa(const cCp_id: Integer; const ACapa: TCapa);
 var
   FDConexao: TFDConnection;
   CountAtu: Integer;
@@ -196,37 +196,37 @@ const
     'UPDATE CAPA SET                ' + sLineBreak +
     '  ID_ALB = :ID_ALB,           ' + sLineBreak +
     '  CP_URL = :CP_URL  ' + sLineBreak +
-    'WHERE ID_ = :ALB_ID            ';
+    'WHERE CP_ID = :CP_ID            ';
 begin
-  if AAlbum.alb_nome.Trim.IsEmpty then
-    raise EDatabaseError.Create('Nome do Album é obrigatório');
-  if AAlbum.id_art = 0 then
-    raise EDatabaseError.Create('ID do Artista do Album é obrigatório');
+  if ACapa.cp_url.Trim.IsEmpty then
+    raise EDatabaseError.Create('Nome da Capa é obrigatório');
+  if ACapa.id_alb = 0 then
+    raise EDatabaseError.Create('ID da Capa é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
-        ACAPA.ID_ALB,
-        ACAPA.CP_URL,
-        cALB_id
+        ACapa.ID_ALB,
+        ACapa.CP_URL,
+        cCp_id
       ],
       [
         ftInteger,
-        ftInteger,
-        ftString
+        ftString,
+        ftInteger
       ]
     );
 
     if CountAtu <= 0 then
-      raise Exception.Create('Nenhuma Capa foi atualizado');
+      raise Exception.Create('Nenhuma Capa foi atualizada');
   finally
     FDConexao.Free;
   end;
 end;
 
-class procedure TCapaService.DeleteAlbum(const cAlb_id: Integer);
+class procedure TCapaService.DeleteCapa(const cCp_id: Integer);
 var
   FDConexao: TFDConnection;
   CountDelete: Integer;
@@ -236,13 +236,13 @@ begin
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
     CountDelete := FDConexao.ExecSQL(
-      'DELETE FROM ALBUM WHERE ALB_ID = :ALB_ID',
-      [cAlb_id],
+      'DELETE FROM CAPA WHERE CP_ID = :CP_ID',
+      [cCp_id],
       [ftInteger]
     );
 
     if CountDelete = 0 then
-      raise EDatabaseError.Create('Nenhum Album foi excluido!');
+      raise EDatabaseError.Create('Nenhuma Capa foi excluida!');
   finally
     FDConexao.Free;
   end;
