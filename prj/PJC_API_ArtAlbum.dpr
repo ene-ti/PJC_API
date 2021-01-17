@@ -21,7 +21,9 @@ uses
   u00_Global in 'units\u00_Global.pas',
   u00_Conexao in 'units\u00_Conexao.pas',
   u_AlbumClass in 'units\u_AlbumClass.pas',
-  u_AlbumService in 'units\u_AlbumService.pas';
+  u_AlbumService in 'units\u_AlbumService.pas',
+  u_CapaClass in 'units\u_CapaClass.pas',
+  u_CapaService in 'units\u_CapaService.pas';
 
 {$R *.res}
 
