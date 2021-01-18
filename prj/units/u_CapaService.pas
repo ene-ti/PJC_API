@@ -3,11 +3,12 @@ unit u_CapaService;
 interface
 
 uses
-  System.Classes,
+  System.Classes,  Vcl.Forms, Vcl.Dialogs, Vcl.imaging.jpeg,
   System.SysUtils,
   System.Generics.Collections,
   u00_conexao,
   u_CapaClass,
+  Data.Cloud.CloudAPI, Data.Cloud.AmazonAPI,
 
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
@@ -64,9 +65,9 @@ begin
       vWhereLike := ' WHERE ' + cField + ' LIKE ''%' + cWhere + '%'' ';
 
     if cOrderBy.Trim.IsEmpty then
-      vOrderBy := ' ORDER BY ART_ID, ALB_ID '
+      vOrderBy := ' ORDER BY ART_ID, ALB_ID, CP_ID '
     else
-      vOrderBy := ' ORDER BY ART_NOME, ALB_NOME ' + cOrderBy;
+      vOrderBy := ' ORDER BY ART_NOME ' + cOrderBy +', ALB_NOME ' + cOrderBy;
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
@@ -118,6 +119,49 @@ end;
 
 class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
 var
+  vStream : TStream;
+  vFile, vBucket : String;
+  vImage : TJPEGImage;
+  amzConnInf : TAmazonConnectionInfo;
+  amzStorServ : TAmazonStorageService;
+  amzRegion : TAmazonRegion;
+  amzRespInfo : TCloudResponseInfo;
+//  amzBuckRes : TAmazonBucketResult;
+//  amzObjeRes : TAmazonObjectResult;
+
+begin
+  amzConnInf := TAmazonConnectionInfo.Create(nil);
+  amzConnInf.UseDefaultEndpoints := False;
+//  amzConnInf.AccountName     := 'Q3AM3UQ867SPQQA43P2F';
+//  amzConnInf.AccountKey      := 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG';
+  amzConnInf.AccountName     := 'AKIAIJXITXLQDT4ED2FQ';
+  amzConnInf.AccountKey      := 'ineHNiVyR4MkvEWdQcHJ4KA5p7AwX//kHt/oz63f';
+  amzConnInf.Protocol        := 'https';
+  amzConnInf.QueueEndpoint   := 'queue.amazonaws.com'; //'play.min.io';  'queue.amazonaws.com';
+  amzConnInf.StorageEndpoint := 's3.amazonaws.com';    //'play.min.io';  's3.amazonaws.com';
+  amzConnInf.TableEndpoint   := 'sdb.amazonaws.com';   //'play.min.io';  'sdb.amazonaws.com';
+  amzConnInf.Region          :=  amzrSAEast1;
+  amzRegion                  :=  amzrSAEast1;
+
+  amzStorServ := TAmazonStorageService.Create(amzConnInf);
+  amzRespInfo := TCloudResponseInfo.Create;
+
+  //showmessage(amzConnInf.StorageEndpoint);
+  //showmessage(TAmazonStorageService.GetRegionString(amzRegion));
+  vStream := TMemoryStream.Create;
+
+  vBucket := 'pjc-artistaxalbum';
+  vFile   := 'Serj Tankian - Harakiri.jpg';
+    //Download do arquivo para a variávei vStream
+  amzStorServ.GetObject(vBucket, vFile, vStream, amzRespInfo, amzRegion);
+  vImage := TJPEGImage.Create;
+  vImage.LoadFromStream(vStream);
+  Result.cImage := vImage;
+  TMemoryStream(vStream).SaveToFile('c:\banco\'+vFile);
+end;
+
+{class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
+var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
 begin
@@ -150,7 +194,7 @@ begin
     TmpDataset.Free;
     FDConexao.Free;
   end;
-end;
+end; }
 
 class procedure TCapaService.CreateCapa(const ACapa: TCapa);
 var
@@ -166,7 +210,7 @@ begin
   if ACapa.cp_url.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome da Capa é obrigatório');
   if ACapa.id_alb = 0 then
-    raise EDatabaseError.Create('ID da Capa é obrigatório');
+    raise EDatabaseError.Create('ID do album é obrigatório');
 
   FDConexao := TFDConnection.Create(nil);
   try
@@ -174,7 +218,7 @@ begin
     FDConexao.ExecSQL(SQL_INSERT,
       [
         ACapa.id_alb,
-        ACapa.cp_url
+        'pjc-artistaxalbum\'+ACapa.cp_url
       ],
       [
         ftInteger,

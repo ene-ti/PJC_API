@@ -66,7 +66,7 @@ begin
     if cOrderBy.Trim.IsEmpty then
       vOrderBy := ' ORDER BY ART_ID, ALB_ID '
     else
-      vOrderBy := ' ORDER BY ART_NOME, ALB_NOME ' + cOrderBy;
+      vOrderBy := ' ORDER BY ART_NOME ' + cOrderBy +', ALB_NOME ' + cOrderBy;
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
     FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +

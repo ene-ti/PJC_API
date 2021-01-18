@@ -3,11 +3,13 @@ unit u_ApiController;
 interface
 
 uses
-  dialogs,
+  System.Classes,
+  Vcl.Dialogs, Vcl.imaging.jpeg, Vcl.ExtCtrls,
   System.SysUtils,
   System.StrUtils,
   MVCFramework,
   MVCFramework.Commons,
+  MVCFramework.Serializer.Intf,
   MVCFramework.Serializer.Commons;
 
 type
@@ -23,7 +25,7 @@ type
     [MVCHTTPMethod([httpGET])]
     procedure GetMyRootPage;
 
-    // - Path ARTISTAS
+    // - Path ARTISTA
     [MVCPath('/artistas')]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtistas;
@@ -47,9 +49,9 @@ type
     [MVCPath('/artista/($art_id)')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteArtista(art_id: Integer);
-    // - Path ARTISTAS
+    // - Path ARTISTA
 
-    // - Path ALBUNS
+    // - Path ALBUM
     [MVCPath('/albuns')]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbuns;
@@ -77,17 +79,46 @@ type
     [MVCPath('/album/($alb_id)')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteAlbum(alb_id: Integer);
-    // - Path ALBUNS
+    // - Path ALBUM
+
+    // - Path CAPA
+    [MVCPath('/capas')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCapas;
+
+    [MVCPath('/capaalbumcategoria')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCapasCategoria;
+
+    [MVCPath('/capaalbumartista')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCapasArtista;
+
+    [MVCPath('/capa/($cp_id)')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCapa(cp_id: Integer);
+
+    [MVCPath('/capa')]
+    [MVCHTTPMethod([httpPOST])]
+    procedure CreateCapa;
+
+    [MVCPath('/capa/($cp_id)')]
+    [MVCHTTPMethod([httpPUT])]
+    procedure UpdateCapa(cp_id: Integer);
+
+    [MVCPath('/capa/($cp_id)')]
+    [MVCHTTPMethod([httpDELETE])]
+    procedure DeleteCapa(cp_id: Integer);
+    // - Path CAPA
 
   end;
 
 implementation
 
 uses
-  u_ArtistaService,
-  u_ArtistaClass,
-  u_AlbumService,
-  u_AlbumClass,
+  u_ArtistaService, u_ArtistaClass,
+  u_AlbumService, u_AlbumClass,
+  u_CapaService, u_CapaClass,
   u00_Global;
 
 procedure TApiController.GetMyRootPage;
@@ -120,7 +151,7 @@ begin
   inherited;
 end;
 
-
+    // - Path ARTISTA
 procedure TApiController.GetArtistas;
 var
   StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
@@ -187,7 +218,9 @@ begin
   TArtistaService.DeleteArtista(art_id);
   Render(200, Format('Artista %d apagado com sucesso', [art_id]));
 end;
+    // - Path ARTISTA
 
+    // - Path ALBUM
 procedure TApiController.GetAlbuns;
 var
   StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
@@ -267,6 +300,91 @@ begin
   TAlbumService.DeleteAlbum(alb_id);
   Render(200, Format('Album %d apagado com sucesso', [alb_id]));
 end;
+    // - Path ALBUM
 
+    // - Path CAPA
+procedure TApiController.GetCapas;
+var
+  StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
+begin
+  // metodo GET: /capass / QUERY PARAMS (por ALB_NOME)
+  StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
+  StrOrderBy   := Context.Request.QueryStringParam('orderby');   // ordenação ASC/DSC
+  StrRegAtual  := Context.Request.QueryStringParam('regatual');  // Nr Reg Atual
+  StrQtdReg    := Context.Request.QueryStringParam('qtdereg');   // Qtde Reg Paginação
+
+  Render<TCapa>(TCapaService.GetCapas('ALB_NOME', StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg));
+end;
+
+procedure TApiController.GetCapasCategoria;
+var
+  StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
+begin
+  // metodo GET: /capas / QUERY PARAMS (por ART_CATEGORIA)
+  StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
+  StrOrderBy   := Context.Request.QueryStringParam('orderby');   // ordenação ASC/DSC
+  StrRegAtual  := Context.Request.QueryStringParam('regatual');  // Nr Reg Atual
+  StrQtdReg    := Context.Request.QueryStringParam('qtdereg');   // Qtde Reg Paginação
+
+  Render<TCapa>(TCapaService.GetCapas('ART_CATEGORIA', StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg));
+end;
+
+procedure TApiController.GetCapasArtista;
+var
+  StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
+begin
+  // metodo GET: /capas / QUERY PARAMS (por ART_NOME)
+  StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
+  StrOrderBy   := Context.Request.QueryStringParam('orderby');   // ordenação ASC/DSC
+  StrRegAtual  := Context.Request.QueryStringParam('regatual');  // Nr Reg Atual
+  StrQtdReg    := Context.Request.QueryStringParam('qtdereg');   // Qtde Reg Paginação
+
+  Render<TCapa>(TCapaService.GetCapas('ART_NOME', StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg));
+end;
+
+procedure TApiController.GetCapa(cp_id: Integer);
+begin
+  // metodo GET: /capa/($cp_id)
+//  ContentType := 'application/octet-stream';
+  ContentType :=  TMVCMediaType.TEXT_PLAIN;
+//  ContentType := 'image/png';
+  Render<TCapa>(TCapaService.GetCapa(cp_id));
+end;
+
+procedure TApiController.CreateCapa;
+var
+  ACapa: TCapa;
+begin
+  // metodo POST: /capa
+  ACapa := Context.Request.BodyAs<TCapa>;
+  try
+    TCapaService.CreateCapa(ACapa);
+    Render(200, 'Capa criada com sucesso');
+  finally
+    ACapa.Free;
+  end;
+end;
+
+procedure TApiController.UpdateCapa(cp_id: Integer);
+var
+  ACapa: TCapa;
+begin
+  // metodo PUT: /capa/($cp_id)
+  ACapa := Context.Request.BodyAs<TCapa>;
+  try
+    TCapaService.UpdateCapa(cp_id, ACapa);
+    Render(200, Format('Capa %d atualizada com sucesso', [cp_id]));
+  finally
+    ACapa.Free;
+  end;
+end;
+
+procedure TApiController.DeleteCapa(cp_id: Integer);
+begin
+  // metodo DELETE: /capa/($cp_id)
+  TCapaService.DeleteCapa(cp_id);
+  Render(200, Format('Capa %d apagada com sucesso', [cp_id]));
+end;
+    // - Path CAPA
 
 end.
