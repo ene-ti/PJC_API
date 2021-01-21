@@ -9,7 +9,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, db, inifiles, Registry, Grids, Buttons, StrUtils, Mask,
-  ComCtrls, DateUtils;
+  ComCtrls, DateUtils, system.UITypes;
 
 
 Procedure ChecaArqIni;

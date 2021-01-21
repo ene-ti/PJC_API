@@ -32,7 +32,7 @@ type
 
   public
     class function GetCapas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TCapa>;
-    class function GetCapa(const cCp_id: Integer): TCapa;
+    class function GetCapa(const cCp_id: Integer): TJPEGImage;
     class procedure CreateCapa(const ACapa: TCapa);
     class procedure UpdateCapa(const cCp_id: Integer; const ACapa: TCapa);
     class procedure DeleteCapa(const cCp_id: Integer);
@@ -117,7 +117,7 @@ begin
   end;
 end;
 
-class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
+class function TCapaService.GetCapa(const cCp_id: Integer): TJPEGImage;
 var
   vStream : TStream;
   vFile, vBucket : String;
@@ -132,10 +132,10 @@ var
 begin
   amzConnInf := TAmazonConnectionInfo.Create(nil);
   amzConnInf.UseDefaultEndpoints := False;
-//  amzConnInf.AccountName     := 'Q3AM3UQ867SPQQA43P2F';
-//  amzConnInf.AccountKey      := 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG';
-  amzConnInf.AccountName     := 'AKIAIJXITXLQDT4ED2FQ';
-  amzConnInf.AccountKey      := 'ineHNiVyR4MkvEWdQcHJ4KA5p7AwX//kHt/oz63f';
+//  amzConnInf.AccountName     := '';
+//  amzConnInf.AccountKey      := 'zuf+';
+  amzConnInf.AccountName     := '';
+  amzConnInf.AccountKey      := '//kHt/oz63f';
   amzConnInf.Protocol        := 'https';
   amzConnInf.QueueEndpoint   := 'queue.amazonaws.com'; //'play.min.io';  'queue.amazonaws.com';
   amzConnInf.StorageEndpoint := 's3.amazonaws.com';    //'play.min.io';  's3.amazonaws.com';
@@ -156,7 +156,7 @@ begin
   amzStorServ.GetObject(vBucket, vFile, vStream, amzRespInfo, amzRegion);
   vImage := TJPEGImage.Create;
   vImage.LoadFromStream(vStream);
-  Result.cImage := vImage;
+  Result := vImage;
   TMemoryStream(vStream).SaveToFile('c:\banco\'+vFile);
 end;
 

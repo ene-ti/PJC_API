@@ -343,12 +343,16 @@ begin
 end;
 
 procedure TApiController.GetCapa(cp_id: Integer);
+var
+  vImage : TJPEGImage;
 begin
+  vImage := TJPEGImage.Create;
   // metodo GET: /capa/($cp_id)
-//  ContentType := 'application/octet-stream';
-  ContentType :=  TMVCMediaType.TEXT_PLAIN;
+  ContentType := 'application/octet-stream';
+//  ContentType :=  TMVCMediaType.TEXT_PLAIN;
 //  ContentType := 'image/png';
-  Render<TCapa>(TCapaService.GetCapa(cp_id));
+  vImage := TCapaService.GetCapa(cp_id);
+  Render(vImage);
 end;
 
 procedure TApiController.CreateCapa;
