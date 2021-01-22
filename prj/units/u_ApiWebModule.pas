@@ -6,7 +6,8 @@ uses
   System.SysUtils,
   System.Classes,
   Web.HTTPApp,
-  MVCFramework;
+  MVCFramework,
+  u_BasicAuth;
 
 type
   TApiWebModule = class(TWebModule)
@@ -41,8 +42,9 @@ begin
   FMVC := TMVCEngine.Create(Self,
     procedure(Config: TMVCConfig)
     begin
-      // session timeout (0 means session cookie)
-      Config[TMVCConfigKey.SessionTimeout] := '0';
+      // session timeout
+      Config[TMVCConfigKey.SessionTimeout] := '0'; // 0=Autentitica uma unica vez e guarda no cookie
+   //   Config[TMVCConfigKey.SessionTimeout] := '-1'; // 1=Autentitica a cada requisição
       //default content-type
       Config[TMVCConfigKey.DefaultContentType] := TMVCConstants.DEFAULT_CONTENT_TYPE;
       //default content charset
@@ -77,17 +79,8 @@ begin
   // To enable compression (deflate, gzip) just add this middleware as the last one
   FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
 
-{  FMVC.AddMiddleware(
-    TMVCBasicAuthenticationMiddleware.Create(
-      TMVCDefaultAuthenticationHandler.New
-        .SetOnAuthentication(
-        procedure(const AUserName, APassword: string;
-          AUserRoles: TList<string>; var IsValid: Boolean;
-          const ASessionData: TDictionary<String, String>)
-        begin
-          IsValid := AUserName.Equals('usu') and APassword.Equals('123');
-        end
-  )));  }
+  // Autenticação Basica
+  FMVC.AddMiddleware(TMVCBasicAuthenticationMiddleware.Create(TBasicAuth.Create));
 end;
 
 procedure TApiWebModule.WebModuleDestroy(Sender: TObject);
