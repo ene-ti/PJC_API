@@ -33,14 +33,8 @@ procedure TBasicAuth.OnAuthentication(const AContext: TWebContext;
 begin
   // Lugar para checar usuario e senha
 
-  AIsValid := False; // Seta autenticação invalida
-  if (AUserName <> username) then
-    exit;
+  AIsValid := (AUserName <> username) and (APassword <> password); // True Se usuario e senha forem iguais
 
-  if (APassword <> password) then
-    exit;
-
-  AIsValid := True; // Se usuario e senha forem iguais
 end;
 
 procedure TBasicAuth.OnAuthorization(const AContext: TWebContext;

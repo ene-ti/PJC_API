@@ -6,25 +6,30 @@ uses
   System.Classes,
   Vcl.Dialogs, Vcl.imaging.jpeg, Vcl.ExtCtrls,
   System.SysUtils,
-  System.StrUtils,
+  System.StrUtils, Web.HTTPApp,
   MVCFramework,
   MVCFramework.Commons,
   MVCFramework.Serializer.Intf,
   MVCFramework.Serializer.Commons;
 
 type
-  [MVCPath('/api')]
-  TApiController = class(TMVCController)
-  protected
-    procedure OnBeforeAction(Context: TWebContext; const AActionName: string; var Handled: Boolean); override;
-    procedure OnAfterAction(Context: TWebContext; const AActionName: string); override;
 
+  [MVCPath('/')]
+  TApiControllerPublic = class(TMVCController)
   public
     [MVCPath('/')]
     [MVCPath('')]
     [MVCHTTPMethod([httpGET])]
     procedure GetMyRootPage;
+  end;
 
+
+  [MVCPath('/api')]
+  TApiController = class(TMVCController)
+  protected
+    procedure OnBeforeAction(Context: TWebContext; const AActionName: string; var Handled: Boolean); override;
+    procedure OnAfterAction(Context: TWebContext; const AActionName: string); override;
+  public
     // - Path ARTISTA
     [MVCPath('/artistas')]
     [MVCHTTPMethod([httpGET])]
@@ -121,7 +126,9 @@ uses
   u_CapaService, u_CapaClass,
   u00_Global;
 
-procedure TApiController.GetMyRootPage;
+{ TApiControllerPublic }
+
+procedure TApiControllerPublic.GetMyRootPage;
 begin
   ContentType := TMVCMediaType.TEXT_HTML;
   Render(
@@ -136,6 +143,8 @@ begin
     '</dl>'
   );
 end;
+
+{ TApiControllerPublic }
 
 procedure TApiController.OnAfterAction(Context: TWebContext; const AActionName: string);
 begin

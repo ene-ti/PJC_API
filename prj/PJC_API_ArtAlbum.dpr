@@ -24,7 +24,8 @@ uses
   u_AlbumService in 'units\u_AlbumService.pas',
   u_CapaClass in 'units\u_CapaClass.pas',
   u_CapaService in 'units\u_CapaService.pas',
-  u_BasicAuth in 'units\u_BasicAuth.pas';
+  u_BasicAuth in 'units\u_BasicAuth.pas',
+  u_JWTAuth in 'units\u_JWTAuth.pas';
 
 {$R *.res}
 
