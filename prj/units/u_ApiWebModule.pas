@@ -91,7 +91,7 @@ begin
   // Autenticação Basica
   //FMVC.AddMiddleware(TMVCBasicAuthenticationMiddleware.Create(TBasicAuth.Create));
   // Autenticação JWT
-  LClaims :=
+{  LClaims :=
     procedure(const JWT: TJWT)  // https://jwt.io - Para decodificar o TOKEN
     begin
       JWT.Claims.Issuer := 'Projeto PJC_API_ArtAlbum'; // Quem gerou o token
@@ -111,7 +111,7 @@ begin
     [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore, TJWTCheckableClaim.IssuedAt], //O que vai ser checado
     50 //tempo em segundos de tolerancia entre a expiração da chave e hora do servidor
     ));
-
+ }
 end;
 
 procedure TApiWebModule.WebModuleDestroy(Sender: TObject);

@@ -9,6 +9,6 @@
     <Transaction>2021/01/17 00:22:41.000.843,=C:\Projetos\PJC\pjc_api\prj\units\u_CapaService.pas</Transaction>
     <Transaction>2021/01/21 20:27:46.000.054,=C:\Projetos\PJC\pjc_api\prj\Unit1.pas</Transaction>
     <Transaction>2021/01/21 20:33:00.000.322,C:\Projetos\PJC\pjc_api\prj\Unit1.pas=C:\Projetos\PJC\pjc_api\prj\units\u_BasicAuth.pas</Transaction>
-    <Transaction>2021/01/22 16:05:33.219,=C:\Projetos\PJC\pjc_api\prj\units\u_JWTAuth.pas</Transaction>
+    <Transaction>2021/01/22 16:05:33.000.219,=C:\Projetos\PJC\pjc_api\prj\units\u_JWTAuth.pas</Transaction>
   </Transactions>
 </BorlandProject>
