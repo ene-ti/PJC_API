@@ -35,10 +35,11 @@ var
   WebModuleClass: TComponentClass = TApiWebModule;
 
 const
-   Secret_Key = '1Chave2Secreta3';
    Login_EndPoint = '/login';
 
 implementation
+
+Uses u00_Global;
 
 {$R *.dfm}
 
@@ -89,9 +90,9 @@ begin
   FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
 
   // Autenticação Basica
-  //FMVC.AddMiddleware(TMVCBasicAuthenticationMiddleware.Create(TBasicAuth.Create));
+  // FMVC.AddMiddleware(TMVCBasicAuthenticationMiddleware.Create(TBasicAuth.Create));
   // Autenticação JWT
-{  LClaims :=
+ { LClaims :=
     procedure(const JWT: TJWT)  // https://jwt.io - Para decodificar o TOKEN
     begin
       JWT.Claims.Issuer := 'Projeto PJC_API_ArtAlbum'; // Quem gerou o token
@@ -105,7 +106,7 @@ begin
     end;
   FMVC.AddMiddleware(TMVCJWTAuthenticationMiddleware.Create(
     TJWTAuth.Create,
-    Secret_Key,      // chave secreta do token
+    vgAppSecretKey,      // chave secreta do token
     Login_EndPoint,  // path para a chamado do login
     LClaims,
     [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore, TJWTCheckableClaim.IssuedAt], //O que vai ser checado

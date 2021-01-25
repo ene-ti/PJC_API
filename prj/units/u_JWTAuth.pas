@@ -19,11 +19,9 @@ type
       const AActionName: string; var AIsAuthorized: Boolean);
   end;
 
-const
-  username = 'admin';
-  password = 'password';
-
 implementation
+
+Uses u00_Global;
 
 { TJWTAuth }
 
@@ -34,7 +32,7 @@ begin
    AUserRoles.Clear;
   // Lugar para checar usuario e senha
 
-  AIsValid := (AUserName = username) and (APassword = password); // True Se usuario e senha forem iguais
+  AIsValid := (AUserName = vgAppusername) and (APassword = vgApppassword); // True Se usuario e senha forem iguais
 
   //Quais os acessos do usuario
   AUserRoles.Add('incluir');

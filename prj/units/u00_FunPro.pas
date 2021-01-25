@@ -138,7 +138,10 @@ begin
   Result := True;
   vgPathAplicacao := ExtractFilePath(Application.ExeName);
 
-  vgAppWebPorta := AchaParametro('Aplicacao','AppWebPorta');
+  vgAppWebPorta  := AchaParametro('Aplicacao','AppWebPorta');
+  vgAppSecretKey :=  Crypto('D', AchaParametro('Aplicacao','AppSecretKeyJWT'));
+  vgAppusername  :=  Crypto('D', AchaParametro('Aplicacao','AppUserAdmin'));
+  vgApppassword  :=  Crypto('D', AchaParametro('Aplicacao','AppPassAdmin'));
 
   vgBancoDriverID := AchaParametro('BancoDados','BDDriverID');
   vgBancoServer   := AchaParametro('BancoDados','BDServer');
@@ -148,6 +151,10 @@ begin
   vgBancoDatabase := AchaParametro('BancoDados','BDDatabase');
 
   if (vgAppWebPorta = '') or
+     (vgAppSecretKey = '') or
+     (vgAppusername = '') or
+     (vgApppassword = '') or
+
      (vgBancoDriverID = '') or
      (vgBancoServer = '') or
      (vgBancoPorta = '') or

@@ -19,11 +19,9 @@ type
       const AActionName: string; var AIsAuthorized: Boolean);
   end;
 
-const
-  username = 'admin';
-  password = 'password';
-
 implementation
+
+Uses u00_Global;
 
 { TBasicAuth }
 
@@ -33,7 +31,7 @@ procedure TBasicAuth.OnAuthentication(const AContext: TWebContext;
 begin
   // Lugar para checar usuario e senha
 
-  AIsValid := (AUserName <> username) and (APassword <> password); // True Se usuario e senha forem iguais
+  AIsValid := (AUserName = vgAppusername) and (APassword = vgApppassword); // True Se usuario e senha forem iguais
 
 end;
 

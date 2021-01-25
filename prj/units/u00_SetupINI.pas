@@ -34,6 +34,9 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label7: TLabel;
+    edSecretKeyJWT: TLabeledEdit;
+    edUsuario: TLabeledEdit;
+    edSenha: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnGravaClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
@@ -72,6 +75,9 @@ begin
     writeln(vArqIni,'*********************************************************************');
     writeln(vArqIni,'[Aplicacao]');
     writeln(vArqIni,'AppWebPorta=');
+    writeln(vArqIni,'AppSecretKeyJWT=');
+    writeln(vArqIni,'AppUserAdmin=');
+    writeln(vArqIni,'AppPassAdmin=');
     writeln(vArqIni,' ');
     writeln(vArqIni,'[BancoDados]');
     writeln(vArqIni,'BDDriverID=');
@@ -97,7 +103,10 @@ var
   vDir : String;
 begin
 
-  edAppWebPorta.Text    := AchaParametro('Aplicacao','AppWebPorta');
+  edAppWebPorta.Text  := AchaParametro('Aplicacao','AppWebPorta');
+  edSecretKeyJWT.Text :=  Crypto('D', AchaParametro('Aplicacao','AppSecretKeyJWT'));
+  edUsuario.Text      :=  Crypto('D', AchaParametro('Aplicacao','AppUserAdmin'));
+  edSenha.Text        :=  Crypto('D', AchaParametro('Aplicacao','AppPassAdmin'));
 
   edBancoDriverID.Text := AchaParametro('BancoDados','BDDriverID');
   edBancoServer.Text   := AchaParametro('BancoDados','BDServer');
@@ -117,7 +126,10 @@ begin
   try
    vIni  := TiniFile.Create(vNomeArqIni);
 
-   vIni.WriteString('Aplicacao','AppWebPorta',edAppWebPorta.Text);
+   vIni.WriteString('Aplicacao','AppWebPorta', edAppWebPorta.Text);
+   vIni.WriteString('Aplicacao','AppSecretKeyJWT', Crypto('C', edSecretKeyJWT.Text));
+   vIni.WriteString('Aplicacao','AppUserAdmin', Crypto('C', edUsuario.Text));
+   vIni.WriteString('Aplicacao','AppPassAdmin', Crypto('C', edSenha.Text));
 
    vIni.WriteString('BancoDados','BDDriverID',  edBancoDriverID.Text);
    vIni.WriteString('BancoDados','BDServer',edBancoServer.Text);
