@@ -19,7 +19,8 @@ uses
   MVCFramework.Server.Impl,
   MVCFramework.Middleware.Authentication,
   MVCFramework.JWT,
-  MVCFramework.Middleware.JWT;
+  MVCFramework.Middleware.JWT, IdBaseComponent, IdComponent, IdIOHandler,
+  IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL;
 
 type
   TApiWebModule = class(TWebModule)

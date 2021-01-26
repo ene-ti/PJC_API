@@ -3,14 +3,18 @@ unit u_ApiController;
 interface
 
 uses
-  System.Classes,
+  System.Classes, Graphics,
   Vcl.Dialogs, Vcl.imaging.jpeg, Vcl.ExtCtrls,
   System.SysUtils,
   System.StrUtils, Web.HTTPApp,
   MVCFramework,
   MVCFramework.Commons,
   MVCFramework.Serializer.Intf,
-  MVCFramework.Serializer.Commons;
+  MVCFramework.Serializer.Commons,
+
+  IdComponent, IdTCPConnection, IdTCPClient,
+  IdHTTP, IdBaseComponent, IdAntiFreezeBase, IdAntiFreeze,
+  IdIOHandler, IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL;
 
 type
 
@@ -353,15 +357,35 @@ end;
 
 procedure TApiController.GetCapa(cp_id: Integer);
 var
-  vImage : TJPEGImage;
+  vJpeg: TJPEGImage;
+  vMemStrm: TMemoryStream;
+  vIdHTTP: TIdHTTP;
+  vUrl : string;
+  vFSSL : TIdSSLIOHandlerSocketOpenSSL;
 begin
-  vImage := TJPEGImage.Create;
-  // metodo GET: /capa/($cp_id)
-  ContentType := 'application/octet-stream';
-//  ContentType :=  TMVCMediaType.TEXT_PLAIN;
-//  ContentType := 'image/png';
-  vImage := TCapaService.GetCapa(cp_id);
-  Render(vImage);
+  vUrl := TCapaService.GetCapa(cp_id);
+  vJpeg := TJPEGImage.Create;
+  vMemStrm := TMemoryStream.Create;
+  vIdHTTP := TIdHTTP.Create(nil);
+  vFSSL := TIdSSLIOHandlerSocketOpenSSL.Create(vIdHTTP);
+  vFSSL.SSLOptions.SSLVersions := [sslvTLSv1_1, sslvTLSv1_2];
+  vIdHTTP.IOHandler := vFSSL;
+  try
+    vIdHTTP.Get(vUrl, vMemStrm);
+    if (vMemStrm.Size > 0) then
+    begin
+      vMemStrm.Position := 0;
+      vJpeg.LoadFromStream(vMemStrm);
+      vJpeg.savetofile('c:\banco\teste2.jpg');
+    end;
+    ContentType :=  TMVCMediaType.TEXT_HTML;
+    Render(vUrl);
+  finally
+    vJpeg.Free;
+    vMemStrm.Free;
+    vIdHTTP.Free;
+  end;
+//  Render(TCapaService.GetCapa(cp_id));
 end;
 
 procedure TApiController.CreateCapa;

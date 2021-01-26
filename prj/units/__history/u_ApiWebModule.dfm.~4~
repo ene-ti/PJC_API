@@ -1,0 +1,18 @@
+object ApiWebModule: TApiWebModule
+  OldCreateOrder = False
+  OnCreate = WebModuleCreate
+  OnDestroy = WebModuleDestroy
+  Actions = <>
+  Height = 230
+  Width = 415
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 216
+    Top = 128
+  end
+end

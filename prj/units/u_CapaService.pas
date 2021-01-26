@@ -32,7 +32,7 @@ type
 
   public
     class function GetCapas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TCapa>;
-    class function GetCapa(const cCp_id: Integer): TJPEGImage;
+    class function GetCapa(const cCp_id: Integer): String;
     class procedure CreateCapa(const ACapa: TCapa);
     class procedure UpdateCapa(const cCp_id: Integer; const ACapa: TCapa);
     class procedure DeleteCapa(const cCp_id: Integer);
@@ -99,6 +99,7 @@ begin
         ACapa.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
         ACapa.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
         ACapa.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
+        ACapa.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
         ACapa.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
 
         Result.Add(ACapa);
@@ -117,7 +118,7 @@ begin
   end;
 end;
 
-class function TCapaService.GetCapa(const cCp_id: Integer): TJPEGImage;
+{class function TCapaService.GetCapa(const cCp_id: Integer): TJPEGImage;
 var
   vStream : TStream;
   vFile, vBucket : String;
@@ -126,20 +127,18 @@ var
   amzStorServ : TAmazonStorageService;
   amzRegion : TAmazonRegion;
   amzRespInfo : TCloudResponseInfo;
-//  amzBuckRes : TAmazonBucketResult;
-//  amzObjeRes : TAmazonObjectResult;
+  amzBuckRes : TAmazonBucketResult;
+  amzObjeRes : TAmazonObjectResult;
 
 begin
   amzConnInf := TAmazonConnectionInfo.Create(nil);
   amzConnInf.UseDefaultEndpoints := False;
-//  amzConnInf.AccountName     := '';
-//  amzConnInf.AccountKey      := 'zuf+';
-  amzConnInf.AccountName     := '';
-  amzConnInf.AccountKey      := '//kHt/oz63f';
+  amzConnInf.AccountName     := 'Q3AM3UQ867SPQQA43P2F';
+  amzConnInf.AccountKey      := 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG';
   amzConnInf.Protocol        := 'https';
-  amzConnInf.QueueEndpoint   := 'queue.amazonaws.com'; //'play.min.io';  'queue.amazonaws.com';
-  amzConnInf.StorageEndpoint := 's3.amazonaws.com';    //'play.min.io';  's3.amazonaws.com';
-  amzConnInf.TableEndpoint   := 'sdb.amazonaws.com';   //'play.min.io';  'sdb.amazonaws.com';
+  amzConnInf.QueueEndpoint   := 'play.min.io'; //'play.min.io';  'queue.amazonaws.com';
+  amzConnInf.StorageEndpoint := 'play.min.io'; //'play.min.io';  's3.amazonaws.com';
+  amzConnInf.TableEndpoint   := 'play.min.io'; //'play.min.io';  'sdb.amazonaws.com';
   amzConnInf.Region          :=  amzrSAEast1;
   amzRegion                  :=  amzrSAEast1;
 
@@ -158,14 +157,14 @@ begin
   vImage.LoadFromStream(vStream);
   Result := vImage;
   TMemoryStream(vStream).SaveToFile('c:\banco\'+vFile);
-end;
+end;}
 
-{class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
+class function TCapaService.GetCapa(const cCp_id: Integer): String;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
 begin
-  Result := TCapa.Create;
+//  Result := TCapa.Create;
 
   FDConexao := TFDConnection.Create(nil);
   try
@@ -174,19 +173,20 @@ begin
     FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
                       ' LEFT OUTER JOIN ALBUM ALB ON ALB.ID_ART = ART.ART_ID ' +
                       ' LEFT OUTER JOIN CAPA CAP ON CAP.ID_ALB = ALB.ALB_ID ' +
-                      '  WHERE ALB_ID = ' + cCp_id.ToString, TmpDataset    );
+                      '  WHERE CP_ID = ' + cCp_id.ToString, TmpDataset    );
 
     if not TmpDataset.IsEmpty then
     begin
-        Result.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
-        Result.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
-        Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
-        Result.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
-        Result.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
-        Result.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
-        Result.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
-        Result.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
-        Result.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
+//        Result.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
+//        Result.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
+//        Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
+//        Result.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
+//        Result.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
+//        Result.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
+//        Result.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
+//        Result.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
+//        Result.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
+        Result := TmpDataset.FieldByName('CP_URL').AsString;
     end
     else
       raise EDatabaseError.CreateFmt('Capa "%d" não encontrada na base de dados!', [cCp_id]);
@@ -194,7 +194,7 @@ begin
     TmpDataset.Free;
     FDConexao.Free;
   end;
-end; }
+end;
 
 class procedure TCapaService.CreateCapa(const ACapa: TCapa);
 var
@@ -202,12 +202,12 @@ var
 const
   SQL_INSERT: string =
     'INSERT INTO CAPA (      ' + sLineBreak +
-    '  ID_ALB, CP_URL       ' + sLineBreak +
+    '  ID_ALB, CP_NOME, CP_URL       ' + sLineBreak +
     ') VALUES (               ' + sLineBreak +
-    '  :ID_ALB, :CP_URL     ' + sLineBreak +
+    '  :ID_ALB, :CP_NOME, :CP_URL     ' + sLineBreak +
     ')';
 begin
-  if ACapa.cp_url.Trim.IsEmpty then
+  if ACapa.cp_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome da Capa é obrigatório');
   if ACapa.id_alb = 0 then
     raise EDatabaseError.Create('ID do album é obrigatório');
@@ -218,10 +218,12 @@ begin
     FDConexao.ExecSQL(SQL_INSERT,
       [
         ACapa.id_alb,
-        'pjc-artistaxalbum\'+ACapa.cp_url
+        ACapa.cp_nome,
+        ACapa.cp_url
       ],
       [
         ftInteger,
+        ftString,
         ftString
       ]
     );
@@ -239,10 +241,11 @@ const
   SQL_UPDATE: string =
     'UPDATE CAPA SET                ' + sLineBreak +
     '  ID_ALB = :ID_ALB,           ' + sLineBreak +
+    '  CP_NOME = :CP_NOME,  ' + sLineBreak +
     '  CP_URL = :CP_URL  ' + sLineBreak +
     'WHERE CP_ID = :CP_ID            ';
 begin
-  if ACapa.cp_url.Trim.IsEmpty then
+  if ACapa.cp_nome.Trim.IsEmpty then
     raise EDatabaseError.Create('Nome da Capa é obrigatório');
   if ACapa.id_alb = 0 then
     raise EDatabaseError.Create('ID da Capa é obrigatório');
@@ -253,11 +256,13 @@ begin
     CountAtu := FDConexao.ExecSQL(SQL_UPDATE,
       [
         ACapa.ID_ALB,
+        ACapa.CP_NOME,
         ACapa.CP_URL,
         cCp_id
       ],
       [
         ftInteger,
+        ftString,
         ftString,
         ftInteger
       ]
