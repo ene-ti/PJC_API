@@ -12,20 +12,29 @@ uses
   Web.WebBroker,
   IdContext,
   IdHTTPWebBrokerBridge,
-  u_ApiController in 'units\u_ApiController.pas',
-  u_ApiWebModule in 'units\u_ApiWebModule.pas' {ApiWebModule: TWebModule},
-  u_ArtistaClass in 'units\u_ArtistaClass.pas',
-  u_ArtistaService in 'units\u_ArtistaService.pas',
-  u00_SetupINI in 'units\u00_SetupINI.pas' {frmSetupINI},
-  u00_FunPro in 'units\u00_FunPro.pas',
-  u00_Global in 'units\u00_Global.pas',
-  u00_Conexao in 'units\u00_Conexao.pas',
-  u_AlbumClass in 'units\u_AlbumClass.pas',
-  u_AlbumService in 'units\u_AlbumService.pas',
-  u_CapaClass in 'units\u_CapaClass.pas',
-  u_CapaService in 'units\u_CapaService.pas',
-  u_BasicAuth in 'units\u_BasicAuth.pas',
-  u_JWTAuth in 'units\u_JWTAuth.pas';
+  
+  u_ApiControllerArtista in 'source\controller\u_ApiControllerArtista.pas',
+  u_ApiControllerAlbum in 'source\controller\u_ApiControllerAlbum.pas',
+  u_ApiControllerCapa in 'source\controller\u_ApiControllerCapa.pas',
+  u_ApiControllerPublico in 'source\controller\u_ApiControllerPublico.pas',
+  
+  u_ApiWebModule in 'source\web\u_ApiWebModule.pas' {ApiWebModule: TWebModule},
+  
+  u00_Conexao in 'source\conexao\u00_Conexao.pas',
+
+  u00_SetupINI in 'source\comum\u00_SetupINI.pas' {frmSetupINI},
+  u00_FunPro in 'source\comum\u00_FunPro.pas',
+  u00_Global in 'source\comum\u00_Global.pas',
+
+  u_BasicAuth in 'source\acesso\u_BasicAuth.pas',
+  u_JWTAuth in 'source\acesso\u_JWTAuth.pas',
+
+  u_ArtistaClass in 'source\service\u_ArtistaClass.pas',
+  u_ArtistaService in 'source\service\u_ArtistaService.pas',
+  u_AlbumClass in 'source\service\u_AlbumClass.pas',
+  u_AlbumService in 'source\service\u_AlbumService.pas',
+  u_CapaClass in 'source\service\u_CapaClass.pas',
+  u_CapaService in 'source\service\u_CapaService.pas';
 
 {$R *.res}
 
