@@ -106,9 +106,6 @@ begin
       '/docs', '.\www', 'index.html'));
    // Documentação Swagger
 
-  // To enable compression (deflate, gzip) just add this middleware as the last one
-  FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
-
   // Autenticação Basica
   // FMVC.AddMiddleware(TMVCBasicAuthenticationMiddleware.Create(TBasicAuth.Create));
   // Autenticação JWT
@@ -133,6 +130,8 @@ begin
     50 //tempo em segundos de tolerancia entre a expiração da chave e hora do servidor
     ));
 
+  // To enable compression (deflate, gzip) just add this middleware as the last one
+  FMVC.AddMiddleware(TMVCCompressionMiddleware.Create);
 end;
 
 procedure TApiWebModule.WebModuleDestroy(Sender: TObject);

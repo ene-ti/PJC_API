@@ -11,6 +11,8 @@ uses
   MVCFramework.Commons,
   MVCFramework.Serializer.Intf,
   MVCFramework.Serializer.Commons,
+  MVCFramework.Swagger.Commons, // Documentação Swagger
+  u_AlbumService, u_AlbumClass,
 
   IdComponent, IdTCPConnection, IdTCPClient,
   IdHTTP, IdBaseComponent, IdAntiFreezeBase, IdAntiFreeze,
@@ -19,6 +21,7 @@ uses
 type
 
   [MVCPath('/api')]
+  [MVCSwagAuthentication(atJsonWebToken)]   // Documentação
   TApiControllerAlbum = class(TMVCController)
   protected
     procedure OnBeforeAction(Context: TWebContext; const AActionName: string; var Handled: Boolean); override;
@@ -26,30 +29,61 @@ type
   public
     // - Path ALBUM
     [MVCPath('/albuns')]
+    [MVCSwagSummaryAttribute('Albuns', 'Lista de Albuns por Nome', 'GetAlbuns')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Nome do Album', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Albuns', TAlbum, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbuns;
 
-    [MVCPath('/albumcategoria')]
+    [MVCPath('/albunscategoria')]
+    [MVCSwagSummaryAttribute('Albuns', 'Lista de Albuns por Categoria', 'GetAlbunsCategoria')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Categoria do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Albuns', TAlbum, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbunsCategoria;
 
-    [MVCPath('/albumartista')]
+    [MVCPath('/albunsartista')]
+    [MVCSwagSummaryAttribute('Albuns', 'Lista de Albuns por Artista', 'GetAlbunsArtista')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Nome do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Albuns', TAlbum, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbunsArtista;
 
     [MVCPath('/album/($alb_id)')]
+    [MVCSwagSummaryAttribute('Albuns', 'Retorna o Album ID', 'GetAlbum')]
+    [MVCSwagParamAttribute(plPath, 'alb_id', 'ID do Album', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbum(alb_id: Integer);
 
     [MVCPath('/album')]
+    [MVCSwagSummaryAttribute('Albuns', 'Cria o Album', 'CreateAlbum')]
+    [MVCSwagParam(plBody, 'Album', 'Album Criado', TAlbum)]
+    [MVCSwagResponsesAttribute(201, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateAlbum;
 
     [MVCPath('/album/($alb_id)')]
+    [MVCSwagSummaryAttribute('Albuns', 'Altera o Album', 'UpdateAlbum')]
+    [MVCSwagParamAttribute(plPath, 'alb_id', 'ID do Album', ptInteger, True)]
+    [MVCSwagParam(plBody, 'Album', 'Album Alterado', TAlbum)]
+    [MVCSwagResponsesAttribute(201, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateAlbum(alb_id: Integer);
 
     [MVCPath('/album/($alb_id)')]
+    [MVCSwagSummaryAttribute('Albuns', 'Apaga o Album', 'DeleteAlbum')]
+    [MVCSwagParamAttribute(plPath, 'alb_id', 'ID do Album', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Album apagado com sucesso')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteAlbum(alb_id: Integer);
     // - Path ALBUM
@@ -59,9 +93,8 @@ type
 implementation
 
 uses
-  u_AlbumService, u_AlbumClass,
   u00_Global;
-
+
 
 procedure TApiControllerAlbum.OnAfterAction(Context: TWebContext; const AActionName: string);
 begin

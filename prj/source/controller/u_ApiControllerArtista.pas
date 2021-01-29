@@ -11,6 +11,8 @@ uses
   MVCFramework.Commons,
   MVCFramework.Serializer.Intf,
   MVCFramework.Serializer.Commons,
+  MVCFramework.Swagger.Commons, // Documentação Swagger
+  u_ArtistaService, u_ArtistaClass,
 
   IdComponent, IdTCPConnection, IdTCPClient,
   IdHTTP, IdBaseComponent, IdAntiFreezeBase, IdAntiFreeze,
@@ -19,6 +21,7 @@ uses
 type
 
   [MVCPath('/api')]
+  [MVCSwagAuthentication(atJsonWebToken)]   // Documentação
   TApiControllerArtista = class(TMVCController)
   protected
     procedure OnBeforeAction(Context: TWebContext; const AActionName: string; var Handled: Boolean); override;
@@ -26,26 +29,51 @@ type
   public
     // - Path ARTISTA
     [MVCPath('/artistas')]
+    [MVCSwagSummaryAttribute('Artistas', 'Lista de Artistas por Nome', 'GetArtistas')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Nome do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Artistas', TArtista, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtistas;
 
     [MVCPath('/artistascategoria')]
+    [MVCSwagSummaryAttribute('Artistas', 'Lista de Artistas por Categoria', 'GetArtistasCategoria')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Categoria do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Artistas', TArtista, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtistasCategoria;
 
     [MVCPath('/artista/($art_id)')]
+    [MVCSwagSummaryAttribute('Artistas', 'Retorna o Artista ID', 'GetArtista')]
+    [MVCSwagParamAttribute(plPath, 'art_id', 'ID do Artista', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtista(art_id: Integer);
 
     [MVCPath('/artista')]
+    [MVCSwagSummaryAttribute('Artistas', 'Cria o Artista', 'CreateArtista')]
+    [MVCSwagParam(plBody, 'Artista', 'Artista Criado', TArtista)]
+    [MVCSwagResponsesAttribute(201, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateArtista;
 
     [MVCPath('/artista/($art_id)')]
+    [MVCSwagSummaryAttribute('Artistas', 'Altera o Artista', 'UpdateArtista')]
+    [MVCSwagParamAttribute(plPath, 'art_id', 'ID do Artista', ptInteger, True)]
+    [MVCSwagParam(plBody, 'Album', 'Artista Alterado', TArtista)]
+    [MVCSwagResponsesAttribute(201, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateArtista(art_id: Integer);
 
     [MVCPath('/artista/($art_id)')]
+    [MVCSwagSummaryAttribute('Artistas', 'Apaga o Artista', 'DeleteArtista')]
+    [MVCSwagParamAttribute(plPath, 'art_id', 'ID do Artista', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Artista apagado com sucesso')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteArtista(art_id: Integer);
     // - Path ARTISTA
@@ -55,7 +83,6 @@ type
 implementation
 
 uses
-  u_ArtistaService, u_ArtistaClass,
   u00_Global;
 
 procedure TApiControllerArtista.OnAfterAction(Context: TWebContext; const AActionName: string);
