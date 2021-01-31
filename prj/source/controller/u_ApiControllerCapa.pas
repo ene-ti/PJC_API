@@ -11,6 +11,8 @@ uses
   MVCFramework.Commons,
   MVCFramework.Serializer.Intf,
   MVCFramework.Serializer.Commons,
+  MVCFramework.Swagger.Commons, // Documentação Swagger
+  u_CapaService, u_CapaClass,
 
   IdComponent, IdTCPConnection, IdTCPClient,
   IdHTTP, IdBaseComponent, IdAntiFreezeBase, IdAntiFreeze,
@@ -19,6 +21,7 @@ uses
 type
 
   [MVCPath('/api')]
+  [MVCSwagAuthentication(atJsonWebToken)]   // Documentação
   TApiControllerCapa = class(TMVCController)
   protected
     procedure OnBeforeAction(Context: TWebContext; const AActionName: string; var Handled: Boolean); override;
@@ -26,30 +29,61 @@ type
   public
     // - Path CAPA
     [MVCPath('/capas')]
+    [MVCSwagSummaryAttribute('Capas', 'Lista de Capas por Nome do Album', 'GetCapas')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Nome do Album', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Capas de Albuns', TCapa, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetCapas;
 
-    [MVCPath('/capaalbumcategoria')]
+    [MVCPath('/capasalbumcategoria')]
+    [MVCSwagSummaryAttribute('Capas', 'Lista de Capas por Categoria', 'GetCapasCategoria')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Categoria do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Capas de Albuns', TCapa, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetCapasCategoria;
 
-    [MVCPath('/capaalbumartista')]
+    [MVCPath('/capasalbumartista')]
+    [MVCSwagSummaryAttribute('Capas', 'Lista de Capas por Artista', 'GetCapasArtista')]
+    [MVCSwagParamAttribute(plQuery, 'wherelike', 'Filtro por Nome do Artista', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'orderby', 'Ordenação ASC ou DSC', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'regatual', 'Paginação a partir do registro n?', ptString, False)]
+    [MVCSwagParamAttribute(plQuery, 'qtdereg', 'Numero de registro por pagina', ptString, False)]
+    [MVCSwagResponsesAttribute(200, 'Lista de Capas de Albuns', TCapa, True)]
     [MVCHTTPMethod([httpGET])]
     procedure GetCapasArtista;
 
     [MVCPath('/capa/($cp_id)')]
+    [MVCSwagSummaryAttribute('Capas', 'Retorna a Capa n...', 'GetCapa')]
+    [MVCSwagParamAttribute(plPath, 'cp_id', 'ID da Capa', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Capa', TCapa, False)]
     [MVCHTTPMethod([httpGET])]
     procedure GetCapa(cp_id: Integer);
 
     [MVCPath('/capa')]
+    [MVCSwagSummaryAttribute('Capas', 'Insere a Capa', 'CreateCapa')]
+    [MVCSwagParam(plBody, 'Capa', 'Capa Inserido', TCapa)]
+    [MVCSwagResponsesAttribute(201, 'Capa', TCapa, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateCapa;
 
     [MVCPath('/capa/($cp_id)')]
+    [MVCSwagSummaryAttribute('Capas', 'Altera o Capa', 'UpdateCapa')]
+    [MVCSwagParamAttribute(plPath, 'cp_id', 'ID do Capa', ptInteger, True)]
+    [MVCSwagParam(plBody, 'Capa', 'Capa Alterada', TCapa)]
+    [MVCSwagResponsesAttribute(200, 'Capa', TCapa, False)]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateCapa(cp_id: Integer);
 
     [MVCPath('/capa/($cp_id)')]
+    [MVCSwagSummaryAttribute('Capas', 'Apaga a Capa', 'DeleteCapa')]
+    [MVCSwagParamAttribute(plPath, 'cp_id', 'ID da Capa', ptInteger, True)]
+    [MVCSwagResponsesAttribute(200, 'Capa apagada com sucesso')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteCapa(cp_id: Integer);
     // - Path CAPA
@@ -59,9 +93,8 @@ type
 implementation
 
 uses
-  u_CapaService, u_CapaClass,
   u00_Global;
-
+
 
 procedure TApiControllerCapa.OnAfterAction(Context: TWebContext; const AActionName: string);
 begin

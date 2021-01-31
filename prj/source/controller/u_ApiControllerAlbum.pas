@@ -59,15 +59,15 @@ type
     procedure GetAlbunsArtista;
 
     [MVCPath('/album/($alb_id)')]
-    [MVCSwagSummaryAttribute('Albuns', 'Retorna o Album ID', 'GetAlbum')]
+    [MVCSwagSummaryAttribute('Albuns', 'Retorna o Album n...', 'GetAlbum')]
     [MVCSwagParamAttribute(plPath, 'alb_id', 'ID do Album', ptInteger, True)]
     [MVCSwagResponsesAttribute(200, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpGET])]
     procedure GetAlbum(alb_id: Integer);
 
     [MVCPath('/album')]
-    [MVCSwagSummaryAttribute('Albuns', 'Cria o Album', 'CreateAlbum')]
-    [MVCSwagParam(plBody, 'Album', 'Album Criado', TAlbum)]
+    [MVCSwagSummaryAttribute('Albuns', 'Insere o Album', 'CreateAlbum')]
+    [MVCSwagParam(plBody, 'Album', 'Album Inserido', TAlbum)]
     [MVCSwagResponsesAttribute(201, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateAlbum;
@@ -76,7 +76,7 @@ type
     [MVCSwagSummaryAttribute('Albuns', 'Altera o Album', 'UpdateAlbum')]
     [MVCSwagParamAttribute(plPath, 'alb_id', 'ID do Album', ptInteger, True)]
     [MVCSwagParam(plBody, 'Album', 'Album Alterado', TAlbum)]
-    [MVCSwagResponsesAttribute(201, 'Album', TAlbum, False)]
+    [MVCSwagResponsesAttribute(200, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateAlbum(alb_id: Integer);
 

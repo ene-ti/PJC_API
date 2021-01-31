@@ -49,15 +49,15 @@ type
     procedure GetArtistasCategoria;
 
     [MVCPath('/artista/($art_id)')]
-    [MVCSwagSummaryAttribute('Artistas', 'Retorna o Artista ID', 'GetArtista')]
+    [MVCSwagSummaryAttribute('Artistas', 'Retorna o Artista n...', 'GetArtista')]
     [MVCSwagParamAttribute(plPath, 'art_id', 'ID do Artista', ptInteger, True)]
     [MVCSwagResponsesAttribute(200, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpGET])]
     procedure GetArtista(art_id: Integer);
 
     [MVCPath('/artista')]
-    [MVCSwagSummaryAttribute('Artistas', 'Cria o Artista', 'CreateArtista')]
-    [MVCSwagParam(plBody, 'Artista', 'Artista Criado', TArtista)]
+    [MVCSwagSummaryAttribute('Artistas', 'Insere o Artista', 'CreateArtista')]
+    [MVCSwagParam(plBody, 'Artista', 'Artista Inserido', TArtista)]
     [MVCSwagResponsesAttribute(201, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateArtista;
@@ -65,8 +65,8 @@ type
     [MVCPath('/artista/($art_id)')]
     [MVCSwagSummaryAttribute('Artistas', 'Altera o Artista', 'UpdateArtista')]
     [MVCSwagParamAttribute(plPath, 'art_id', 'ID do Artista', ptInteger, True)]
-    [MVCSwagParam(plBody, 'Album', 'Artista Alterado', TArtista)]
-    [MVCSwagResponsesAttribute(201, 'Artista', TArtista, False)]
+    [MVCSwagParam(plBody, 'Artista', 'Artista Alterado', TArtista)]
+    [MVCSwagResponsesAttribute(200, 'Artista', TArtista, False)]
     [MVCHTTPMethod([httpPUT])]
     procedure UpdateArtista(art_id: Integer);
 
