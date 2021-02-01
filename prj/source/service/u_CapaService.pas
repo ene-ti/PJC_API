@@ -32,7 +32,7 @@ type
 
   public
     class function GetCapas(const cField, cWhere, cOrderBy, cRegAtual, cQtdReg: string): TObjectList<TCapa>;
-    class function GetCapa(const cCp_id: Integer): String;
+    class function GetCapa(const cCp_id: Integer): TCapa;
     class procedure CreateCapa(const ACapa: TCapa);
     class procedure UpdateCapa(const cCp_id: Integer; const ACapa: TCapa);
     class procedure DeleteCapa(const cCp_id: Integer);
@@ -70,9 +70,9 @@ begin
       vOrderBy := ' ORDER BY ART_NOME ' + cOrderBy +', ALB_NOME ' + cOrderBy;
 
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
-    FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
-                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ID_ART = ART.ART_ID ' +
-                      ' LEFT OUTER JOIN CAPA CAP ON CAP.ID_ALB = ALB.ALB_ID ' +
+    FDConexao.ExecSQL('SELECT * FROM CAPA CAP ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ALB_ID = CAP.ID_ALB ' +
+                      ' LEFT OUTER JOIN ARTISTA ART ON ART.ART_ID = ALB.ID_ART ' +
                       vWhereLike + vOrderBy, TmpDataset);
 
     if not TmpDataset.IsEmpty then
@@ -91,16 +91,16 @@ begin
         vCont := vCont+1;
 
         ACapa := TCapa.Create;
+        ACapa.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
+        ACapa.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
+        ACapa.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
+        ACapa.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
         ACapa.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
         ACapa.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
         ACapa.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
         ACapa.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
         ACapa.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
         ACapa.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
-        ACapa.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
-        ACapa.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
-        ACapa.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
-        ACapa.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
 
         Result.Add(ACapa);
         TmpDataset.Next;
@@ -159,34 +159,34 @@ begin
   TMemoryStream(vStream).SaveToFile('c:\banco\'+vFile);
 end;}
 
-class function TCapaService.GetCapa(const cCp_id: Integer): String;
+class function TCapaService.GetCapa(const cCp_id: Integer): TCapa;
 var
   FDConexao: TFDConnection;
   TmpDataset: TDataSet;
 begin
-//  Result := TCapa.Create;
+  Result := TCapa.Create;
 
   FDConexao := TFDConnection.Create(nil);
   try
     FDConexao.ConnectionDefName := NOME_CONEXAO_BD;
 
-    FDConexao.ExecSQL('SELECT * FROM ARTISTA ART ' +
-                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ID_ART = ART.ART_ID ' +
-                      ' LEFT OUTER JOIN CAPA CAP ON CAP.ID_ALB = ALB.ALB_ID ' +
+    FDConexao.ExecSQL('SELECT * FROM CAPA CAP ' +
+                      ' LEFT OUTER JOIN ALBUM ALB ON ALB.ALB_ID = CAP.ID_ALB ' +
+                      ' LEFT OUTER JOIN ARTISTA ART ON ART.ART_ID = ALB.ID_ART ' +
                       '  WHERE CP_ID = ' + cCp_id.ToString, TmpDataset    );
 
     if not TmpDataset.IsEmpty then
     begin
-//        Result.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
-//        Result.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
-//        Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
-//        Result.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
-//        Result.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
-//        Result.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
-//        Result.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
-//        Result.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
-//        Result.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
-        Result := TmpDataset.FieldByName('CP_URL').AsString;
+        Result.art_id   := TmpDataset.FieldByName('ART_ID').AsInteger;
+        Result.art_nome := TmpDataset.FieldByName('ART_NOME').AsString;
+        Result.art_categoria := TmpDataset.FieldByName('ART_CATEGORIA').AsString;
+        Result.alb_id   := TmpDataset.FieldByName('ALB_ID').AsInteger;
+        Result.alb_nome := TmpDataset.FieldByName('ALB_NOME').AsString;
+        Result.id_art   := TmpDataset.FieldByName('ID_ART').AsInteger;
+        Result.cp_id   := TmpDataset.FieldByName('CP_ID').AsInteger;
+        Result.id_alb   := TmpDataset.FieldByName('ID_ALB').AsInteger;
+        Result.cp_nome := TmpDataset.FieldByName('CP_NOME').AsString;
+        Result.cp_url := TmpDataset.FieldByName('CP_URL').AsString;
     end
     else
       raise EDatabaseError.CreateFmt('Capa "%d" não encontrada na base de dados!', [cCp_id]);

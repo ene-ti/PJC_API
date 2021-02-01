@@ -68,7 +68,7 @@ type
     [MVCPath('/capa')]
     [MVCSwagSummaryAttribute('Capas', 'Insere a Capa', 'CreateCapa')]
     [MVCSwagParam(plBody, 'Capa', 'Capa Inserido', TCapa)]
-    [MVCSwagResponsesAttribute(201, 'Capa', TCapa, False)]
+    [MVCSwagResponsesAttribute(200, 'Capa', TCapa, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateCapa;
 
@@ -84,6 +84,7 @@ type
     [MVCSwagSummaryAttribute('Capas', 'Apaga a Capa', 'DeleteCapa')]
     [MVCSwagParamAttribute(plPath, 'cp_id', 'ID da Capa', ptInteger, True)]
     [MVCSwagResponsesAttribute(200, 'Capa apagada com sucesso')]
+    // [MVCSwagIgnorePathAttribute] //caso eu queira esconder esse PATH
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteCapa(cp_id: Integer);
     // - Path CAPA
@@ -158,7 +159,7 @@ var
   vUrl : string;
   vFSSL : TIdSSLIOHandlerSocketOpenSSL;
 begin
-  vUrl := TCapaService.GetCapa(cp_id);
+{  vUrl := TCapaService.GetCapa(cp_id);
   vJpeg := TJPEGImage.Create;
   vMemStrm := TMemoryStream.Create;
   vIdHTTP := TIdHTTP.Create(nil);
@@ -179,8 +180,8 @@ begin
     vJpeg.Free;
     vMemStrm.Free;
     vIdHTTP.Free;
-  end;
-//  Render(TCapaService.GetCapa(cp_id));
+  end;  }
+  Render(TCapaService.GetCapa(cp_id));
 end;
 
 procedure TApiControllerCapa.CreateCapa;

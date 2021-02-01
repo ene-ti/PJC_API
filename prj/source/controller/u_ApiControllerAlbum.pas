@@ -68,7 +68,7 @@ type
     [MVCPath('/album')]
     [MVCSwagSummaryAttribute('Albuns', 'Insere o Album', 'CreateAlbum')]
     [MVCSwagParam(plBody, 'Album', 'Album Inserido', TAlbum)]
-    [MVCSwagResponsesAttribute(201, 'Album', TAlbum, False)]
+    [MVCSwagResponsesAttribute(200, 'Album', TAlbum, False)]
     [MVCHTTPMethod([httpPOST])]
     procedure CreateAlbum;
 

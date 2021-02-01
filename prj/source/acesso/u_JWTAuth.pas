@@ -35,9 +35,9 @@ begin
   AIsValid := (AUserName = vgAppusername) and (APassword = vgApppassword); // True Se usuario e senha forem iguais
 
   //Quais os acessos do usuario
-  AUserRoles.Add('incluir');
-  AUserRoles.Add('alterar');
-  //AUserRoles.Add('excluir');
+  // AUserRoles.Add('incluir');
+  // AUserRoles.Add('alterar');
+  // AUserRoles.Add('excluir');
 end;
 
 procedure TJWTAuth.OnAuthorization(const AContext: TWebContext;
@@ -52,20 +52,20 @@ begin
 
   // seta autorização de acordo com os acessos
  // if AControllerQualifiedClassName = 'u_ApiController.TApiController' then
-  begin
-    if AActionName = 'CreateArtista' then
-    begin
-      AIsAuthorized := AUserRoles.Contains('incluir')
-    end;
-    if AActionName = 'UpdateArtista' then
-    begin
-      AIsAuthorized := AUserRoles.Contains('alterar')
-    end;
-    if AActionName = 'DeleteArtista' then
-    begin
-      AIsAuthorized := AUserRoles.Contains('excluir')
-    end;
-  end;
+ // begin
+ //   if AActionName = 'CreateArtista' then
+ //   begin
+ //     AIsAuthorized := AUserRoles.Contains('incluir')
+ //   end;
+ //   if AActionName = 'UpdateArtista' then
+ //   begin
+ //     AIsAuthorized := AUserRoles.Contains('alterar')
+ //   end;
+ //   if AActionName = 'DeleteArtista' then
+ //   begin
+ //     AIsAuthorized := AUserRoles.Contains('excluir')
+ //   end;
+ // end;
 
 end;
 

@@ -38,7 +38,8 @@ var
   vSwaggerInfo : TMVCSwaggerInfo;  // Documentação Swagger
 
 const
-   Login_EndPoint = '/login';
+   EndPoint_Login = '/login';
+   EndPoint_Documentacao = '/docs';
 
 implementation
 
@@ -69,7 +70,7 @@ begin
       //unhandled actions are permitted?
       Config[TMVCConfigKey.AllowUnhandledAction] := 'false';
       //enables or not system controllers loading (available only from localhost requests)
-      Config[TMVCConfigKey.LoadSystemControllers] := 'true';
+      Config[TMVCConfigKey.LoadSystemControllers] := 'false';
       //default view file extension
       Config[TMVCConfigKey.DefaultViewFileExtension] := 'html';
       //view path
@@ -103,7 +104,7 @@ begin
         'Autenticação por JWT', False));
 
   FMVC.AddMiddleware(TMVCStaticFilesMiddleware.Create(
-      '/docs', '.\www', 'index.html'));
+      EndPoint_Documentacao, '.\www', 'index.html'));
    // Documentação Swagger
 
   // Autenticação Basica
@@ -124,7 +125,7 @@ begin
   FMVC.AddMiddleware(TMVCJWTAuthenticationMiddleware.Create(
     TJWTAuth.Create,
     vgAppSecretKey,      // chave secreta do token
-    Login_EndPoint,  // path para a chamado do login
+    EndPoint_Login,  // path para a chamado do login
     LClaims,
     [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore, TJWTCheckableClaim.IssuedAt], //O que vai ser checado
     50 //tempo em segundos de tolerancia entre a expiração da chave e hora do servidor
