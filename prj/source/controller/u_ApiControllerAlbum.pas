@@ -114,6 +114,7 @@ end;
 procedure TApiControllerAlbum.GetAlbuns;
 var
   StrWhereLike, StrOrderBy, StrRegAtual, StrQtdReg: String;
+  IP:string;
 begin
   // metodo GET: /albuns / QUERY PARAMS (por ALB_NOME)
   StrWhereLike := Context.Request.QueryStringParam('wherelike'); // like na clausula where
