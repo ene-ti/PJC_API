@@ -1,0 +1,490 @@
+{
+	"info": {
+		"_postman_id": "c06f15c9-ecb3-4039-a447-e4a706f4512a",
+		"name": "PJC_API_ALBUM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /albuns (tudo)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albuns (wherelike = black)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns?wherelike=black",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "black"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albuns (orderby = desc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns?orderby=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albuns (orderby = asc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns?orderby=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albuns (regatual = 5 & qtdereg = 4)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns?regatual=6&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					],
+					"query": [
+						{
+							"key": "regatual",
+							"value": "6"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albuns (wherelike = nel & orderby = desc & regatual = 2 & qtdereg = 3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA4MjQsIm5iZiI6MTYxMjE0MDUyNCwiaWF0IjoxNjEyMTQwNTI0LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.rcQaSEHdoX0fewFyzqgSnbhDWLJ0dZZckZSEOsn2lQUXasQzsNHyHYTk9V5r__6-lzxqTCnejs6z8SUpI6ivTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albuns?wherelike=o&orderby=desc&regatual=1&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albuns"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "o"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "1"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /album (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/album/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /album (id - insert)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n    \"alb_nome\": \"NOVO ALBUM finDDDDDal\",\r\n    \"id_art\": 3\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/album",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /album (id - update)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n    \"alb_nome\": \"ALBUM alterado\",\r\n    \"id_art\": 22\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/album/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /album (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/album/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"album",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /albunscategoria (wherelike = banda & orderby = desc & regatual = 2 & qtdereg = 3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albunscategoria?wherelike=cantor&orderby=desc&regatual=0&qtdereg=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albunscategoria"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "cantor"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "0"
+						},
+						{
+							"key": "qtdereg",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET albunsartista?wherelike=robert&orderby=desc&regatual=0&qtdereg=3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDA5NDgsIm5iZiI6MTYxMjE0MDY0OCwiaWF0IjoxNjEyMTQwNjQ4LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.kPkHMgBrvJkn6Ljr-aaJN_PPKi8-pGWpXIyHGNrPh942_zvpq0gBqYdBDuPuvcPlX-NctacxtW_sIDaBc8r_fg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/albunsartista?wherelike=roses&orderby=desc&regatual=0&qtdereg=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"albunsartista"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "roses"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "0"
+						},
+						{
+							"key": "qtdereg",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "f575899f-b965-4df8-8394-185b4466f74b",
+		"name": "PJC_API_ARTISTA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /artistas (tudo)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistas (wherelike = robert)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas?wherelike=robert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "robert"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistas (orderby = desc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas?orderby=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistas (orderby = asc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas?orderby=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistas (regatual = 5 & qtdereg = 4)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas?regatual=2&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					],
+					"query": [
+						{
+							"key": "regatual",
+							"value": "2"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistas (wherelike = nel & orderby = desc & regatual = 2 & qtdereg = 3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxMTUyMjAsIm5iZiI6MTYxMjExNDkyMCwiaWF0IjoxNjEyMTE0OTIwLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.S3PbO194_a5zPR1F4N-krNNoIlwFruNYaIrh-tHMRNxFitnjk-p3-FRfVNGsZcEXHxfHNlflD4CIpb89HCu2Vw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistas?wherelike=o&orderby=desc&regatual=4&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistas"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "o"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "4"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artista (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artista/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artista",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /artista (id - insert)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"art_nome\": \"Novo Nelsimar\",\r\n        \"art_categoria\": \"Cantor\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/artista",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artista"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /artista (id - update)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"art_id\": 33,\r\n        \"art_nome\": \"alterado Nelsimar\",\r\n        \"art_categoria\": \"tudo\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/artista/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artista",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "33"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /artista (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artista/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artista",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "40"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /artistascategoria (wherelike = nel & orderby = desc & regatual = 2 & qtdereg = 3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEwODYsIm5iZiI6MTYxMjE0MDc4NiwiaWF0IjoxNjEyMTQwNzg2LCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.2MSDCroDfuVVc-iOnUG6K3qRWFZesdyWad5seRRvZCv_gKwAvaZdnLutBWCyu4ol-VFNGS2e6j0PyhKaoa5wKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/artistascategoria?wherelike=banda&orderby=desc&regatual=4&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"artistascategoria"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "banda"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "4"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

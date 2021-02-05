@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "b606f93b-36c4-4c97-af6c-5b551d124453",
+		"name": "PJC_API_CAPA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /capas (tudo)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capas (wherelike = black)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas?wherelike=black",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "black"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capas (orderby = desc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas?orderby=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET i/capas (orderby = asc)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas?orderby=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					],
+					"query": [
+						{
+							"key": "orderby",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capas (regatual=6 & qtdereg=3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas?regatual=6&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					],
+					"query": [
+						{
+							"key": "regatual",
+							"value": "6"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capas (wherelike=o&orderby=desc&regatual=1&qtdereg=3)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capas?wherelike=o&orderby=desc&regatual=1&qtdereg=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capas"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "o"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "1"
+						},
+						{
+							"key": "qtdereg",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capa (id)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/capa/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capa",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /capa (id - insert)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_alb\": 16,\r\n    \"cp_nome\": \"noma da capa\",\r\n    \"cp_url\": \"url da capa\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/capa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/album (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_alb\": 20,\r\n    \"cp_nome\": \"alretacao de capa\",\r\n    \"cp_url\": \"cp_url de capa.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/capa/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capa",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /capa (id)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capa/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capa",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/capasalbumcategoria (wherelike=cantor & orderby=desc & regatual=0 & qtdereg=10",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capasalbumcategoria?wherelike=cantor&orderby=desc&regatual=0&qtdereg=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capasalbumcategoria"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "cantor"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "0"
+						},
+						{
+							"key": "qtdereg",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /capasalbumartista (wherelike=a & orderby=desc & regatual=0 & qtdereg=5)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQcm9qZXRvIFBKQ19BUElfQXJ0QWxidW0iLCJleHAiOjE2MTIxNDEyMjMsIm5iZiI6MTYxMjE0MDkyMywiaWF0IjoxNjEyMTQwOTIzLCJyb2xlcyI6IiIsImNwZiI6IjEyOC45NDMuMjU4LTk0IiwidXNlcm5hbWUiOiJhZG1pbiIsIm5vbWUiOiJOZWxzaW1hciJ9.O7BLTECwtw0qovhcNtS5UgrxTjPIWRrK27pSzy9HDsxifguYWV-Szwcy-_fONMdVOw3DXQDu_y_E6mSv1hPlLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/capasalbumartista?wherelike=serj&orderby=desc&regatual=0&qtdereg=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"capasalbumartista"
+					],
+					"query": [
+						{
+							"key": "wherelike",
+							"value": "serj"
+						},
+						{
+							"key": "orderby",
+							"value": "desc"
+						},
+						{
+							"key": "regatual",
+							"value": "0"
+						},
+						{
+							"key": "qtdereg",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
