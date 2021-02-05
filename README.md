@@ -18,9 +18,15 @@ Executar o comando: 01-mysql.bat para criar o container do MySql
 Executar o comando: 02-win.bat para criar o container do Windows/app
 
 ##-------------------------------##
+## Acesso:
+Carregar os scripts do POSTMAN para testes da API (pasta: postman)
+Para acesso a documentação e teste via navegador: http://localhost:8080/docs/   (ip do container image_winapp)
+Para acesso a API: http://localhost:8080/login (ip do container image_winapp)
+
+##-------------------------------##
 ## Requisitos:
 a)	A solução deverá conter a segurança necessária de forma a não permitir acesso ao endpoint a partir de domínios diversos do qual estará hospedado o serviço; 
-	** Não implementado (faltou conhecimento o suficiente);
+	** Não implementado (faltou entendimento/conhecimento o suficiente para demandar este requisito);
 b)	A solução deverá conter controle de acesso por meio de autenticação JWT com expiração a cada 5 minutos e possibilidade de renovação; 
 	*** Implementado;
 c)	A solução deverá implementar pelo menos os verbos post, put, get; 
