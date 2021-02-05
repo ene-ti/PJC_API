@@ -13,12 +13,12 @@ REM .
 REM ----- ATENCAO !!! AGUARDE PELO MENOS 1 MINUTO PARA O PROXIMO PASSO ---  
 REM ----- ISSO GARANTE A CRICAO DE ESTRUTURA DE PASTAS DO MYSQL ----------  
 REM .
-REM Cria o banco dentro do container  
+REM Cria o banco DB_PJC dentro do container  
 REM .
   pause
   docker exec -i container_mysql mysql -uroot -pdbpjc < db/scriptdbpjc.sql
 REM Executa terminal dentro da imagem
-REM Teste se criou ok
+REM Testar se criou ok
 REM    # mysql -uroot -pdbpjc
 REM    mysql> use db_pjc;
 REM    mysql> select * from artista; 

@@ -47,6 +47,12 @@ begin
     oParametros.Add('User_Name='+vgBancoUserName);
     oParametros.Add('Password='+vgBancoPassword);
     oParametros.Add('Database='+vgBancoDatabase);
+      WriteLn(vgBancoDriverID);
+      WriteLn(vgBancoServer);
+      WriteLn(vgBancoPorta);
+      WriteLn(vgBancoUserName);
+      WriteLn(vgBancoPassword);
+      WriteLn(vgBancoDatabase);
 
     // parametros para o controle do pool se necessário e quiser alterar
     //oParametros.Add('POOL_MaximumItems=50');
@@ -54,14 +60,22 @@ begin
     //oParametros.Add('POOL_CleanupTimeout=900000');
 
     FDManager.AddConnectionDef(NOME_CONEXAO_BD, vgBancoDriverID, oParametros);
+    WriteLn('FDManager.Open');
     FDManager.Open;
 
     FDConnection1 := TFDConnection.Create(nil);
     FDConnection1.ConnectionDefName := NOME_CONEXAO_BD;
+    WriteLn('FDConnection1.Connected-01');
     FDConnection1.Connected := true;
+    WriteLn('FDConnection1.Connected-02');
     if (FDConnection1.Connected = false) then
     begin
+      WriteLn('EDatabaseError');
       raise EDatabaseError.Create('Erro de conexão com o banco');
+    end
+    else
+    begin
+      WriteLn('CONECTADO');
     end;
   finally
     result := FDConnection1.Connected;

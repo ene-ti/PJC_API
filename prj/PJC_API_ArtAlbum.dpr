@@ -126,10 +126,13 @@ begin
 end;
 
 begin
+  WriteLn('ChecaArqIni');
   ChecaArqIni;
+  WriteLn('CargaParametrosIniciais');
   if (CargaParametrosIniciais = true) then
   begin
     // cria pool de conexao com banco de dados
+    WriteLn('CreatePoolConnection');
     CreatePoolConnection;
 
     ReportMemoryLeaksOnShutdown := True;

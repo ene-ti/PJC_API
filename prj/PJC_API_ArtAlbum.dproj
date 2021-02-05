@@ -214,25 +214,28 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="units\u_ApiController.pas"/>
-        <DCCReference Include="units\u_ApiWebModule.pas">
+        <DCCReference Include="source\controller\u_ApiControllerArtista.pas"/>
+        <DCCReference Include="source\controller\u_ApiControllerAlbum.pas"/>
+        <DCCReference Include="source\controller\u_ApiControllerCapa.pas"/>
+        <DCCReference Include="source\controller\u_ApiControllerPublico.pas"/>
+        <DCCReference Include="source\web\u_ApiWebModule.pas">
             <Form>ApiWebModule</Form>
             <DesignClass>TWebModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="units\u_ArtistaClass.pas"/>
-        <DCCReference Include="units\u_ArtistaService.pas"/>
-        <DCCReference Include="units\u00_SetupINI.pas">
+        <DCCReference Include="source\conexao\u00_Conexao.pas"/>
+        <DCCReference Include="source\comum\u00_SetupINI.pas">
             <Form>frmSetupINI</Form>
         </DCCReference>
-        <DCCReference Include="units\u00_FunPro.pas"/>
-        <DCCReference Include="units\u00_Global.pas"/>
-        <DCCReference Include="units\u00_Conexao.pas"/>
-        <DCCReference Include="units\u_AlbumClass.pas"/>
-        <DCCReference Include="units\u_AlbumService.pas"/>
-        <DCCReference Include="units\u_CapaClass.pas"/>
-        <DCCReference Include="units\u_CapaService.pas"/>
-        <DCCReference Include="units\u_BasicAuth.pas"/>
-        <DCCReference Include="units\u_JWTAuth.pas"/>
+        <DCCReference Include="source\comum\u00_FunPro.pas"/>
+        <DCCReference Include="source\comum\u00_Global.pas"/>
+        <DCCReference Include="source\acesso\u_BasicAuth.pas"/>
+        <DCCReference Include="source\acesso\u_JWTAuth.pas"/>
+        <DCCReference Include="source\service\u_ArtistaClass.pas"/>
+        <DCCReference Include="source\service\u_ArtistaService.pas"/>
+        <DCCReference Include="source\service\u_AlbumClass.pas"/>
+        <DCCReference Include="source\service\u_AlbumService.pas"/>
+        <DCCReference Include="source\service\u_CapaClass.pas"/>
+        <DCCReference Include="source\service\u_CapaService.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
